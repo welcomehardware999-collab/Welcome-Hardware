@@ -37,8 +37,27 @@ import { AdminSettings } from './pages/admin/AdminSettings';
 import { AdminDoorBuilder } from './pages/admin/AdminDoorBuilder';
 import { AdminStockMaintaining } from './pages/admin/AdminStockMaintaining';
 
+function getNormalizedPath(): string {
+  if (window.location.hash) {
+    const rawHash = window.location.hash.replace(/^#\/?/, '/');
+    const [h] = rawHash.split('?');
+    return h || '/';
+  }
+
+  const pathname = window.location.pathname || '/';
+  if (window.location.hostname.endsWith('github.io')) {
+    const segments = pathname.split('/').filter(Boolean);
+    if (segments.length > 0) {
+      const inner = '/' + segments.slice(1).join('/');
+      return inner || '/';
+    }
+  }
+
+  return pathname;
+}
+
 function AppContent() {
-  const [currentPath, setCurrentPath] = useState<string>(window.location.pathname || '/');
+  const [currentPath, setCurrentPath] = useState<string>(getNormalizedPath());
   const [searchParams, setSearchParams] = useState<URLSearchParams>(new URLSearchParams(window.location.search));
   const { isAuthenticated, isCheckingAuth } = useAdmin();
 
@@ -51,21 +70,32 @@ function AppContent() {
     }
   });
 
-  // Synchronize browser history (pushState & popstate)
+  // Synchronize browser history (pushState & popstate & hashchange)
   useEffect(() => {
     const handlePopState = () => {
-      setCurrentPath(window.location.pathname);
+      setCurrentPath(getNormalizedPath());
       setSearchParams(new URLSearchParams(window.location.search));
       window.scrollTo(0, 0);
     };
 
     window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    window.addEventListener('hashchange', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('hashchange', handlePopState);
+    };
   }, []);
 
   const navigate = (to: string) => {
     const [path, search] = to.split('?');
-    window.history.pushState({}, '', to);
+    if (window.location.hostname.endsWith('github.io')) {
+      const segments = window.location.pathname.split('/').filter(Boolean);
+      const repo = segments[0] ? `/${segments[0]}` : '';
+      const targetUrl = `${repo}${path}${search ? `?${search}` : ''}`;
+      window.history.pushState({}, '', targetUrl);
+    } else {
+      window.history.pushState({}, '', to);
+    }
     setCurrentPath(path);
     setSearchParams(new URLSearchParams(search || ''));
     window.scrollTo(0, 0);

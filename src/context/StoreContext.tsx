@@ -158,7 +158,13 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   // Real-time Server-Sent Events listener
   useEffect(() => {
+    if (window.location.hostname.endsWith('github.io')) {
+      return;
+    }
     const eventSource = new EventSource('/api/events');
+    eventSource.onerror = () => {
+      eventSource.close();
+    };
 
     eventSource.addEventListener('order_updated', (e) => {
       try {

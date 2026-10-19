@@ -38,7 +38,13 @@ export const AdminOrders: React.FC = () => {
 
   // Real-time order synchronization via SSE
   useEffect(() => {
+    if (window.location.hostname.endsWith('github.io')) {
+      return;
+    }
     const eventSource = new EventSource('/api/events');
+    eventSource.onerror = () => {
+      eventSource.close();
+    };
 
     eventSource.addEventListener('new_order', (e) => {
       try {
