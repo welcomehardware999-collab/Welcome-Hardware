@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Top Arc for Arched Text "WELCOME HARDWARE" -->
+    <path id="welcomeTextArc" d="M 70 250 A 180 180 0 0 1 430 250" fill="none" />
+    
+    <!-- Circular clip for the emblem art -->
+    <clipPath id="emblemCircleClip">
+      <circle cx="250" cy="250" r="236" />
+    </clipPath>
+
+    <!-- Lotus Petal Gradients -->
+    <linearGradient id="pinkPetal" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#FCE4EC" />
+      <stop offset="60%" stop-color="#F8BBD0" />
+      <stop offset="100%" stop-color="#F48FB1" />
+    </linearGradient>
+
+    <linearGradient id="lilacPetal" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#F3E5F5" />
+      <stop offset="70%" stop-color="#CE93D8" />
+      <stop offset="100%" stop-color="#BA68C8" />
+    </linearGradient>
+
+    <linearGradient id="bluePetal" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#E3F2FD" />
+      <stop offset="70%" stop-color="#90CAF9" />
+      <stop offset="100%" stop-color="#64B5F6" />
+    </linearGradient>
+
+    <linearGradient id="yellowGlow" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#FFF59D" />
+      <stop offset="100%" stop-color="#FFFDE7" />
+    </linearGradient>
+  </defs>
+
+  <!-- Clean Base Circle -->
+  <circle cx="250" cy="250" r="236" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2" />
+
+  <!-- Inner Art clipped within circle -->
+  <g clip-path="url(#emblemCircleClip)">
+    
+    <!-- Sunrise glow behind petals -->
+    <ellipse cx="250" cy="380" rx="200" ry="120" fill="url(#yellowGlow)" opacity="0.9" />
+
+    <!-- Lotus Petals Layer -->
+    <!-- Outermost Soft Blue Petals -->
+    <path d="M 250 290 C 130 280 90 230 100 170 C 130 160 190 220 250 290 Z" fill="url(#bluePetal)" opacity="0.85" />
+    <path d="M 250 290 C 370 280 410 230 400 170 C 370 160 310 220 250 290 Z" fill="url(#bluePetal)" opacity="0.85" />
+
+    <!-- Mid Lilac / Violet Petals -->
+    <path d="M 250 290 C 150 250 130 180 150 120 C 185 130 220 190 250 290 Z" fill="url(#lilacPetal)" opacity="0.9" />
+    <path d="M 250 290 C 350 250 370 180 350 120 C 315 130 280 190 250 290 Z" fill="url(#lilacPetal)" opacity="0.9" />
+
+    <!-- Center Top Pastel Pink Petals -->
+    <path d="M 250 285 C 180 230 180 150 215 95 C 240 125 250 190 250 285 Z" fill="url(#pinkPetal)" />
+    <path d="M 250 285 C 320 230 320 150 285 95 C 260 125 250 190 250 285 Z" fill="url(#pinkPetal)" />
+    <path d="M 250 280 C 230 210 230 120 250 82 C 270 120 270 210 250 280 Z" fill="#F8BBD0" opacity="0.95" />
+
+    <!-- Central Indian Woman Figure (Namaste) -->
+    <!-- Royal Blue Saree Drape -->
+    <path d="M 178 280 C 168 208 185 132 215 102 C 235 82 265 82 285 102 C 315 132 332 208 322 280 C 300 285 200 285 178 280 Z" fill="#1558A6" />
+
+    <!-- Golden/Yellow Saree Border -->
+    <path d="M 210 108 C 230 92 270 92 290 108 C 299 126 301 156 297 180 C 292 178 289 172 287 164 C 290 144 285 122 277 112 C 263 102 237 102 223 112 C 215 122 210 144 213 164 C 211 172 208 178 203 180 C 199 156 201 126 210 108 Z" fill="#FBC02D" />
+
+    <!-- Dark Hair parted in middle -->
+    <path d="M 215 116 C 230 108 270 108 285 116 C 292 133 290 158 285 173 C 278 150 265 136 250 136 C 235 136 222 150 215 173 C 210 158 208 133 215 116 Z" fill="#1C1E24" />
+
+    <!-- Face & Forehead -->
+    <path d="M 222 140 C 230 133 270 133 278 140 C 285 158 282 186 272 202 C 262 214 238 214 228 202 C 218 186 215 158 222 140 Z" fill="#FCE0CD" />
+
+    <!-- Red Bindi on Forehead -->
+    <circle cx="250" cy="146" r="3.2" fill="#D32F2F" />
+
+    <!-- Eyebrows -->
+    <path d="M 230 154 Q 237 151 244 154" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" fill="none" />
+    <path d="M 256 154 Q 263 151 270 154" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" fill="none" />
+
+    <!-- Closed Smiling Eyes with Eyelashes -->
+    <path d="M 231 163 Q 238 169 245 163" stroke="#1A1A1A" stroke-width="2.2" stroke-linecap="round" fill="none" />
+    <path d="M 255 163 Q 262 169 269 163" stroke="#1A1A1A" stroke-width="2.2" stroke-linecap="round" fill="none" />
+
+    <!-- Nose outline -->
+    <path d="M 248 170 Q 250 176 253 175" stroke="#E0A88F" stroke-width="1.6" stroke-linecap="round" fill="none" />
+
+    <!-- Gentle Smiling Lips -->
+    <path d="M 242 186 Q 250 192 258 186" stroke="#D81B60" stroke-width="2.2" stroke-linecap="round" fill="none" />
+
+    <!-- Golden Earrings -->
+    <circle cx="216" cy="186" r="4.5" fill="#FBC02D" stroke="#F57F17" stroke-width="1" />
+    <circle cx="284" cy="186" r="4.5" fill="#FBC02D" stroke="#F57F17" stroke-width="1" />
+
+    <!-- Neck -->
+    <path d="M 238 208 L 238 224 C 243 226 257 226 262 224 L 262 208 Z" fill="#FCE0CD" />
+
+    <!-- Blouse / Saree Fold over Chest -->
+    <path d="M 205 238 C 220 224 280 224 295 238 L 305 285 L 195 285 Z" fill="#1558A6" />
+
+    <!-- Golden Bangles on Wrists -->
+    <ellipse cx="232" cy="243" rx="8" ry="4.5" fill="#FBC02D" stroke="#F57F17" stroke-width="1.2" transform="rotate(-25 232 243)" />
+    <ellipse cx="268" cy="243" rx="8" ry="4.5" fill="#FBC02D" stroke="#F57F17" stroke-width="1.2" transform="rotate(25 268 243)" />
+
+    <!-- Hands in Namaste (Anjali Mudra) -->
+    <path d="M 234 244 C 236 228 244 198 249 186 C 250 184 251 184 251 186 C 252 203 248 236 242 252 C 238 252 235 248 234 244 Z" fill="#F5D0B5" stroke="#DDA88F" stroke-width="1.2" />
+    <path d="M 266 244 C 264 228 256 198 251 186 C 250 184 249 184 249 186 C 248 203 252 236 258 252 C 262 252 265 248 266 244 Z" fill="#FCE0CD" stroke="#DDA88F" stroke-width="1.2" />
+    <line x1="250" y1="186" x2="250" y2="250" stroke="#DDA88F" stroke-width="1.2" />
+
+    <!-- Forearm lines entering namaste -->
+    <path d="M 210 264 C 218 252 228 246 234 244 L 240 256 C 230 263 220 272 215 283 Z" fill="#F5D0B5" />
+    <path d="M 290 264 C 282 252 272 246 266 244 L 260 256 C 270 263 280 272 285 283 Z" fill="#FCE0CD" />
+
+    <!-- FOREGROUND MONOGRAM: Bold 'W' and 'H' -->
+    <!-- Solid Deep Navy 'W' -->
+    <polygon points="106,284 150,284 186,378 220,284 258,284 212,416 172,416 138,334 104,416 64,416" fill="#0A1C54" />
+
+    <!-- Solid Vivid Red 'H' and Extended Base Underline -->
+    <!-- Left column, crossbar, right column, and right base underline -->
+    <path d="M 242 284 
+             L 288 284 
+             L 288 332 
+             L 344 332 
+             L 344 284 
+             L 390 284 
+             L 390 416 
+             L 444 416 
+             L 444 436 
+             L 344 436 
+             L 344 368 
+             L 288 368 
+             L 288 416 
+             L 242 416 
+             Z" 
+          fill="#E50914" />
+
+  </g>
+
+  <!-- Arched Top Text: "WELCOME HARDWARE" -->
+  <text font-family="'Arial Black', 'Impact', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
+        font-weight="900" 
+        font-size="34" 
+        fill="#0A1C54" 
+        letter-spacing="4">
+    <textPath href="#welcomeTextArc" startOffset="50%" text-anchor="middle">
+      WELCOME HARDWARE
+    </textPath>
+  </text>
+
+  <!-- Crisp Outer Ring Border -->
+  <circle cx="250" cy="250" r="236" fill="none" stroke="#0A1C54" stroke-width="5" />
+</svg>

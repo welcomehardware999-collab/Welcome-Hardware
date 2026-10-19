@@ -1,0 +1,12 @@
+{
+  "name": "Welcome Hardware",
+  "description": "Professional e-commerce and store management platform for Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE. Online ordering with store pickup, live inventory, bulk quotes, and physical store operations.",
+  "requestFramePermissions": [
+    "camera",
+    "notifications"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
+
