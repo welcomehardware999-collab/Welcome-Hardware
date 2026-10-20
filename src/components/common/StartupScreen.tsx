@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, MapPin, Phone } from 'lucide-react';
+import { LOGO_URL } from '../../lib/assets';
 
 interface StartupScreenProps {
   onComplete: () => void;
@@ -42,7 +43,7 @@ export const StartupScreen: React.FC<StartupScreenProps> = ({ onComplete }) => {
             {/* Exact Existing Official Logo Asset */}
             <div className="relative p-3 bg-white rounded-full shadow-2xl border border-slate-200/90">
               <img
-                src="/welcome-hardware-logo.svg"
+                src={LOGO_URL}
                 alt="Welcome Hardware"
                 className="w-36 h-36 sm:w-44 sm:h-44 object-contain rounded-full bg-white"
               />

@@ -19,13 +19,13 @@ import {
 
 const API_BASE = '/api';
 
-// In-memory admin authentication session backed by sessionStorage for seamless navigation & refresh
+// In-memory admin authentication session backed by sessionStorage & localStorage for seamless navigation & refresh
 let inMemoryAdminToken: string | null = null;
 let inMemoryAdminUser: { role?: string; name?: string; id?: string } | null = null;
 
 try {
-  inMemoryAdminToken = sessionStorage.getItem('wh_admin_session_token');
-  const storedUser = sessionStorage.getItem('wh_admin_session_user');
+  inMemoryAdminToken = sessionStorage.getItem('wh_admin_session_token') || localStorage.getItem('wh_admin_session_token');
+  const storedUser = sessionStorage.getItem('wh_admin_session_user') || localStorage.getItem('wh_admin_session_user');
   if (storedUser) {
     inMemoryAdminUser = JSON.parse(storedUser);
   }
@@ -39,13 +39,17 @@ export function setAdminSession(token: string | null, user: { role?: string; nam
   try {
     if (token) {
       sessionStorage.setItem('wh_admin_session_token', token);
+      localStorage.setItem('wh_admin_session_token', token);
     } else {
       sessionStorage.removeItem('wh_admin_session_token');
+      localStorage.removeItem('wh_admin_session_token');
     }
     if (user) {
       sessionStorage.setItem('wh_admin_session_user', JSON.stringify(user));
+      localStorage.setItem('wh_admin_session_user', JSON.stringify(user));
     } else {
       sessionStorage.removeItem('wh_admin_session_user');
+      localStorage.removeItem('wh_admin_session_user');
     }
   } catch {}
 }
@@ -56,6 +60,8 @@ export function clearAdminSession() {
   try {
     sessionStorage.removeItem('wh_admin_session_token');
     sessionStorage.removeItem('wh_admin_session_user');
+    localStorage.removeItem('wh_admin_session_token');
+    localStorage.removeItem('wh_admin_session_user');
   } catch {}
 }
 
@@ -346,7 +352,8 @@ export async function fetchAdminSession(): Promise<{
     }
     const data = await res.json();
     if (data.authenticated && data.user) {
-      setAdminSession(inMemoryAdminToken, data.user);
+      const activeTok = data.token || inMemoryAdminToken;
+      setAdminSession(activeTok, data.user);
     }
     return data;
   } catch {

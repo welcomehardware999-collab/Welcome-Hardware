@@ -2,6 +2,7 @@ import React from 'react';
 import { MapPin, Phone, Clock, Mail, ShieldCheck, Download, Calculator, Sparkles, CheckCircle2 } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';
 import { PWAInstallButton } from './PWAInstallButton';
+import { getAssetUrl, LOGO_URL } from '../../lib/assets';
 
 interface FooterProps {
   navigate: (path: string) => void;
@@ -43,7 +44,7 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <img 
-                src={storeSettings.logoUrl || "/welcome-hardware-logo.svg"} 
+                src={getAssetUrl(storeSettings.logoUrl) || LOGO_URL} 
                 alt="Welcome Hardware" 
                 className="w-12 h-12 object-contain shrink-0 rounded-full shadow-md bg-white p-0.5 border border-slate-700"
                 referrerPolicy="no-referrer"

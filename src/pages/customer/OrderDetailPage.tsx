@@ -18,6 +18,7 @@ import { fetchOrderById } from '../../lib/api';
 import { Order } from '../../types';
 import { useStore } from '../../context/StoreContext';
 import { InvoiceModal } from '../../components/common/InvoiceModal';
+import { LOGO_URL } from '../../lib/assets';
 
 interface OrderDetailPageProps {
   orderId: string;
@@ -148,7 +149,7 @@ export const OrderDetailPage: React.FC<OrderDetailPageProps> = ({ orderId, navig
 
             <div className="flex items-center gap-3.5">
               <img
-                src="/welcome-hardware-logo.svg"
+                src={LOGO_URL}
                 alt="Welcome Hardware"
                 className="w-12 h-12 sm:w-14 sm:h-14 object-contain rounded-full shadow-md bg-white p-0.5 shrink-0"
               />
@@ -203,7 +204,7 @@ export const OrderDetailPage: React.FC<OrderDetailPageProps> = ({ orderId, navig
               <div className="bg-white p-3.5 rounded-2xl shadow-xl border border-amber-400/50">
                 <div className="flex items-center justify-center gap-1.5 pb-2 mb-2 border-b border-slate-100">
                   <img
-                    src="/welcome-hardware-logo.svg"
+                    src={LOGO_URL}
                     alt="Welcome Hardware"
                     className="w-5 h-5 object-contain rounded-full"
                   />

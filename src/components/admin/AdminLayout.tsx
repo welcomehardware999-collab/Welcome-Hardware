@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { ShoppingBag } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
+import { LOGO_URL } from '../../lib/assets';
 import { useStore } from '../../context/StoreContext';
 
 interface AdminLayoutProps {
@@ -78,7 +79,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children, activePath, 
               className="flex items-center gap-3 cursor-pointer"
             >
               <img
-                src="/welcome-hardware-logo.svg"
+                src={LOGO_URL}
                 alt="Welcome Hardware"
                 className="w-10 h-10 object-contain rounded-full bg-white p-0.5 shadow-xs shrink-0"
               />

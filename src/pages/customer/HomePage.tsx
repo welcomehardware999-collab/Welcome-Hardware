@@ -26,6 +26,7 @@ import { fetchProducts } from '../../lib/api';
 import { Product } from '../../types';
 import { CATEGORIES } from '../../data/mockData';
 import { BuildYourDoorBanner } from '../../components/customer/BuildYourDoorBanner';
+import { LOGO_URL } from '../../lib/assets';
 
 interface HomePageProps {
   navigate: (path: string) => void;
@@ -78,7 +79,7 @@ export const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
             {/* Prominent Welcome Hardware Official Logo Badge */}
             <div className="flex items-center gap-3.5 bg-slate-950/80 p-3 pr-5 rounded-2xl border border-slate-800 shadow-xl backdrop-blur-xs w-fit">
               <img
-                src="/welcome-hardware-logo.svg"
+                src={LOGO_URL}
                 alt="Welcome Hardware"
                 className="w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-full shadow-md bg-white p-0.5 shrink-0"
               />
@@ -654,7 +655,7 @@ export const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
             <div className="bg-slate-100 rounded-xl overflow-hidden border border-slate-300 relative aspect-16/10 flex flex-col items-center justify-center p-6 text-center">
               <div className="w-16 h-16 rounded-full bg-white text-slate-950 flex items-center justify-center shadow-md mb-3 border border-slate-200 p-1">
                 <img
-                  src="/welcome-hardware-logo.svg"
+                  src={LOGO_URL}
                   alt="Welcome Hardware"
                   className="w-full h-full object-contain rounded-full"
                 />

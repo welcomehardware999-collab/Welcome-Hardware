@@ -9,11 +9,19 @@ import {
   Banknote, 
   CheckCircle2, 
   ArrowLeft,
-  AlertCircle
+  AlertCircle,
+  Copy,
+  Check,
+  Printer,
+  FileText,
+  Package,
+  ArrowRight
 } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';
-import { CustomerType, PaymentMethod } from '../../types';
+import { CustomerType, PaymentMethod, Order } from '../../types';
 import { createOrder } from '../../lib/api';
+import { InvoiceModal } from '../../components/common/InvoiceModal';
+import { LOGO_URL } from '../../lib/assets';
 
 interface CheckoutPageProps {
   navigate: (path: string) => void;
@@ -47,10 +55,10 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ navigate }) => {
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  if (cart.length === 0) {
-    navigate('/cart');
-    return null;
-  }
+  // Confirmed Order state to display immediate Order Confirmation screen with Pickup PIN & QR
+  const [confirmedOrder, setConfirmedOrder] = useState<Order | null>(null);
+  const [showInvoiceModal, setShowInvoiceModal] = useState(false);
+  const [copiedPin, setCopiedPin] = useState(false);
 
   const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,15 +111,236 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ navigate }) => {
       const placedOrder = await createOrder(orderPayload);
       clearCart();
       addPlacedOrder(placedOrder);
-
-      // Navigate directly to the newly created order detail page with PIN & QR
-      navigate(`/orders/${placedOrder.id}`);
+      setConfirmedOrder(placedOrder);
+      window.scrollTo(0, 0);
     } catch (err: any) {
       console.error('Order creation failed:', err);
       setErrorMessage(err.message || 'Failed to place order. Please try again.');
       setSubmitting(false);
     }
   };
+
+  // --- ORDER CONFIRMATION SCREEN ---
+  if (confirmedOrder) {
+    return (
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        {/* Success Banner */}
+        <div className="rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-700 text-white p-6 shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+              <CheckCircle2 className="w-7 h-7 text-white" />
+            </div>
+            <div>
+              <span className="text-[11px] font-black uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded inline-block">
+                ORDER CONFIRMED & STOCK RESERVED
+              </span>
+              <h1 className="text-xl sm:text-2xl font-black uppercase tracking-tight mt-0.5">
+                Order #{confirmedOrder.orderNumber} Placed Successfully
+              </h1>
+              <p className="text-xs text-emerald-100">
+                Your materials are reserved in our Hospet store inventory for counter pickup.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <button
+              onClick={() => setShowInvoiceModal(true)}
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold px-3.5 py-2 rounded-lg text-xs transition shadow-sm"
+            >
+              <Printer className="w-3.5 h-3.5" />
+              <span>Tax Invoice</span>
+            </button>
+            <button
+              onClick={() => navigate(`/orders/${confirmedOrder.id}`)}
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 bg-white text-emerald-950 font-bold px-3.5 py-2 rounded-lg text-xs hover:bg-emerald-50 transition shadow-sm"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>Order Details</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Hero Pickup PIN & QR Verification Card */}
+        <div className="rounded-2xl bg-gradient-to-br from-slate-950 via-slate-900 to-amber-950 text-white p-6 sm:p-8 border border-slate-800 shadow-2xl relative overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            
+            {/* PIN Section */}
+            <div className="md:col-span-8 space-y-4">
+              <div className="flex items-center gap-3">
+                <img
+                  src={LOGO_URL}
+                  alt="Welcome Hardware"
+                  className="w-12 h-12 object-contain rounded-full shadow-md bg-white p-0.5 shrink-0"
+                />
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white">
+                    In-Store Pickup Pass
+                  </h2>
+                  <p className="text-xs text-amber-300 font-semibold">
+                    Show this PIN at Welcome Hardware Hospet Dispatch Counter
+                  </p>
+                </div>
+              </div>
+
+              {/* Giant 4-Digit PIN */}
+              <div className="bg-slate-900/95 rounded-2xl p-5 border-2 border-amber-500/60 inline-block shadow-lg">
+                <span className="text-[11px] font-black text-amber-400 uppercase tracking-widest block">
+                  Your 4-Digit Pickup PIN:
+                </span>
+                <div className="flex items-center gap-4 mt-1.5">
+                  <span className="text-5xl sm:text-6xl font-mono font-black tracking-widest text-amber-400 select-all">
+                    {confirmedOrder.pickupPin}
+                  </span>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(confirmedOrder.pickupPin);
+                      setCopiedPin(true);
+                      setTimeout(() => setCopiedPin(false), 2000);
+                    }}
+                    className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition border border-slate-700"
+                    title="Copy PIN"
+                  >
+                    {copiedPin ? <Check className="w-5 h-5 text-emerald-400" /> : <Copy className="w-5 h-5" />}
+                  </button>
+                </div>
+                <p className="text-[11px] text-slate-300 mt-2 font-medium">
+                  {copiedPin ? '✓ Copied PIN to clipboard!' : 'Single-use PIN verified by staff at material handover.'}
+                </p>
+              </div>
+
+              {/* Counter Location */}
+              <div className="pt-2 text-xs text-slate-300 space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
+                  <span className="font-bold text-white">{storeSettings.address}</span>
+                </div>
+                <div className="flex items-center gap-2 text-slate-300">
+                  <Clock className="w-4 h-4 text-amber-400 shrink-0" />
+                  <span>Pickup Slot: <strong className="text-amber-300">{confirmedOrder.pickupSlot}</strong></span>
+                </div>
+                <div className="flex items-center gap-2 text-slate-400">
+                  <Phone className="w-4 h-4 text-amber-400 shrink-0" />
+                  <span>Helpline: <strong className="text-white">{storeSettings.phone}</strong></span>
+                </div>
+              </div>
+            </div>
+
+            {/* QR Code Container */}
+            <div className="md:col-span-4 flex flex-col items-center justify-center text-center">
+              {confirmedOrder.qrCodeDataUrl ? (
+                <div className="bg-white p-3.5 rounded-2xl shadow-xl border border-amber-400/50">
+                  <div className="flex items-center justify-center gap-1.5 pb-2 mb-2 border-b border-slate-100">
+                    <img
+                      src={LOGO_URL}
+                      alt="Welcome Hardware"
+                      className="w-5 h-5 object-contain rounded-full"
+                    />
+                    <span className="text-[10px] font-black uppercase tracking-tight text-slate-900">
+                      Welcome Hardware
+                    </span>
+                  </div>
+                  <img
+                    src={confirmedOrder.qrCodeDataUrl}
+                    alt={`Pickup QR Code #${confirmedOrder.orderNumber}`}
+                    className="w-40 h-40 object-contain mx-auto"
+                  />
+                  <p className="text-[10px] text-slate-900 font-bold font-mono mt-1.5 uppercase">
+                    Scan for Counter Handover
+                  </p>
+                </div>
+              ) : (
+                <div className="w-40 h-40 bg-slate-800 rounded-2xl flex items-center justify-center text-slate-400">
+                  <QrCode className="w-16 h-16" />
+                </div>
+              )}
+            </div>
+
+          </div>
+        </div>
+
+        {/* Order Details & Summary */}
+        <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-xs space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+            <h3 className="text-sm font-black uppercase tracking-wider text-slate-900">
+              Reserved Items Summary ({confirmedOrder.items.length})
+            </h3>
+            <span className="text-xs font-semibold text-slate-500">
+              Payment: <strong className="text-slate-900">{confirmedOrder.paymentMethod}</strong> ({confirmedOrder.paymentStatus})
+            </span>
+          </div>
+
+          <div className="divide-y divide-slate-100">
+            {confirmedOrder.items.map((item, idx) => (
+              <div key={idx} className="py-3 flex items-center justify-between gap-4 text-xs">
+                <div className="space-y-0.5">
+                  <p className="font-bold text-slate-900">{item.name}</p>
+                  <p className="text-slate-500 text-[11px] font-mono">
+                    SKU: {item.sku} {item.thickness ? `• ${item.thickness}` : ''}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <span className="text-slate-600 block">{item.quantity} {item.unit} × ₹{item.finalPrice.toLocaleString('en-IN')}</span>
+                  <span className="font-mono font-bold text-slate-900">₹{item.total.toLocaleString('en-IN')}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="pt-3 border-t border-slate-200 flex justify-between items-center">
+            <span className="text-sm font-black text-slate-900 uppercase">Grand Total (Inclusive of GST)</span>
+            <span className="text-xl font-mono font-black text-amber-700">
+              ₹{confirmedOrder.grandTotal.toLocaleString('en-IN')}
+            </span>
+          </div>
+        </div>
+
+        {/* Navigation Actions */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+          <button
+            onClick={() => navigate('/orders')}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold px-6 py-2.5 rounded-lg text-xs transition"
+          >
+            <Package className="w-4 h-4" />
+            <span>Go to My Orders History</span>
+          </button>
+
+          <div className="flex items-center gap-3 w-full sm:w-auto">
+            <button
+              onClick={() => setShowInvoiceModal(true)}
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 border border-slate-300 hover:bg-slate-100 text-slate-700 font-bold px-4 py-2.5 rounded-lg text-xs transition"
+            >
+              <Printer className="w-4 h-4" />
+              <span>Tax Invoice</span>
+            </button>
+
+            <button
+              onClick={() => navigate('/shop')}
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-lg text-xs transition"
+            >
+              <span>Continue Shopping</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Invoice Modal for Printing */}
+        {showInvoiceModal && (
+          <InvoiceModal
+            order={confirmedOrder}
+            storeSettings={storeSettings}
+            onClose={() => setShowInvoiceModal(false)}
+          />
+        )}
+      </div>
+    );
+  }
+
+  if (cart.length === 0) {
+    navigate('/cart');
+    return null;
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">

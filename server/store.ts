@@ -99,8 +99,12 @@ class HardwareStoreDB {
         return false;
       }
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed.products)) {
+      let needsSave = false;
+      if (Array.isArray(parsed.products) && parsed.products.length > 0) {
         this.products = parsed.products;
+      } else {
+        this.products = [...INITIAL_PRODUCTS];
+        needsSave = true;
       }
       if (Array.isArray(parsed.orders)) {
         this.orders = parsed.orders;
@@ -140,7 +144,6 @@ class HardwareStoreDB {
       }
 
       // Safe persistent one-time assignment for any older order missing a valid pickup PIN
-      let needsSave = false;
       for (const order of this.orders) {
         if (!order.pickupPin || typeof order.pickupPin !== 'string' || !order.pickupPin.trim()) {
           order.pickupPin = crypto.randomInt(1000, 10000).toString();

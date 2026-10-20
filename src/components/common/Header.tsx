@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';
 import { PWAInstallButton } from './PWAInstallButton';
+import { getAssetUrl, LOGO_URL } from '../../lib/assets';
 
 interface HeaderProps {
   currentPath: string;
@@ -108,7 +109,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, navigate }) => {
             id="brand-header-logo"
           >
             <img 
-              src={storeSettings.logoUrl || "/welcome-hardware-logo.svg"} 
+              src={getAssetUrl(storeSettings.logoUrl) || LOGO_URL} 
               alt="Welcome Hardware" 
               className="w-11 h-11 sm:w-12 sm:h-12 object-contain shrink-0 rounded-full shadow-xs bg-white p-0.5 border border-slate-200/80"
               referrerPolicy="no-referrer"

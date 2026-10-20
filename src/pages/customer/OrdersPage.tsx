@@ -19,7 +19,7 @@ interface OrdersPageProps {
 }
 
 export const OrdersPage: React.FC<OrdersPageProps> = ({ navigate }) => {
-  const { profile, storeSettings } = useStore();
+  const { profile, storeSettings, orders: contextOrders } = useStore();
   const [orders, setOrders] = useState<Order[]>([]);
   const [searchPhone, setSearchPhone] = useState(profile.phone || '');
   const [searchOrderNumber, setSearchOrderNumber] = useState('');
@@ -37,9 +37,18 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({ navigate }) => {
       if (targetPhone) params.phone = targetPhone;
       if (searchOrderNumber.trim()) params.search = searchOrderNumber.trim();
       const data = await fetchOrders(params);
-      setOrders(data);
+      if (data && data.length > 0) {
+        setOrders(data);
+      } else if (!targetPhone && contextOrders && contextOrders.length > 0) {
+        setOrders(contextOrders);
+      } else {
+        setOrders([]);
+      }
     } catch (err) {
       console.error('Failed to fetch orders:', err);
+      if (contextOrders && contextOrders.length > 0) {
+        setOrders(contextOrders);
+      }
     } finally {
       setLoading(false);
     }

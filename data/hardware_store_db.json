@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "savedAt": "2026-10-19T07:10:33.621Z",
+  "savedAt": "2026-10-20T13:26:19.819Z",
   "products": [
     {
       "id": "ply-001",
@@ -13,8 +13,8 @@
       "discount": 8,
       "finalPrice": 3174,
       "stock": 85,
-      "reservedStock": 2,
-      "availableStock": 83,
+      "reservedStock": 3,
+      "availableStock": 82,
       "lowStockThreshold": 15,
       "unit": "Sheet",
       "size": "8 x 4 ft",
@@ -1804,14 +1804,13 @@
   ],
   "orders": [
     {
-      "id": "ord-1792393833519",
-      "orderNumber": "WH-1029",
+      "id": "ord-1792502779719",
+      "orderNumber": "WH-1031",
       "customer": {
-        "name": "Suresh Patil",
-        "phone": "9988776655",
-        "email": "suresh.patil@example.com",
+        "name": "Sanjay Singhania",
+        "phone": "9988112233",
         "customerType": "Contractor",
-        "businessName": "Patil Interior Works"
+        "businessName": "Singhania Interiors Hospet"
       },
       "items": [
         {
@@ -1823,40 +1822,142 @@
           "price": 3450,
           "discount": 8,
           "finalPrice": 3174,
-          "quantity": 2,
-          "total": 6348,
+          "quantity": 3,
+          "total": 9522,
           "image": "https://images.unsplash.com/photo-1546484396-fb3fc6f95f98?auto=format&fit=crop&w=800&q=80",
           "size": "8 x 4 ft",
           "thickness": "18mm"
         }
       ],
-      "subtotal": 6348,
-      "discountTotal": 552,
-      "gstTotal": 1143,
-      "grandTotal": 6348,
+      "subtotal": 9522,
+      "discountTotal": 828,
+      "gstTotal": 1714,
+      "grandTotal": 9522,
       "status": "Collected",
-      "pickupPin": "7215",
-      "qrCodeDataUrl": "data:image/png;base64,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6ko+qSvZZR58knmw0pWcMg9OdCVPmAezruQJ82DWlayYB6e6kpl5cMo8eMNARORSAxGRSw1ERC41EBG51EBE5FJfP784ZB480ZXMzINTXckp82DWlTxhHsy6khXz4JO6kl3mwUpX8gbz4FRXsmIezLqSFfNgpSuZmQdv6Up2mQcrXcknmQe7upKZebDSlayYB7OuZNdARORSAxGRSw1ERC41EBG51EBE5FJfP794iXmwqys5ZR6sdCUnzIMnupI3mAenupJT5sGprmSXeXCqK5mZBytdyYp5MOtKVsyDWVeyYh78BV3JKfNgV1fyvzYQEbnUQETkUgMRkUsNREQu9c1D5sGuruSUefAG8+BUV7LLPFjpSlbMg1lXcso8WOlKZubBSlcyMw9WupJd5sETXcku82DWlayYBytdycw82GUerHQlK+bBrCv5JPNgpSvZ1ZWsmAezruSTBiIilxqIiFxqICJyqYGIyKUGIiKX+uZfqCt5wjx4g3nwSebBSleyqyvZ1ZWsmAe7zINdXckT5sGsK9llHqx0Jae6kk8yD97QlayYBytdycw8OGUe7OpKdg1ERC41EBG51EBE5FIDEZFLDURELvX184sHzINdXcmKefBf0JWsmAenupJd5sGsK1kxDz6pK1kxD3Z1JSvmwa6uZGYerHQlp8yDWVeyYh6c6kpWzINZV7JiHryhK1kxD97QlewaiIhcaiAicqmBiMilBiIil/r6+cUh8+CJruSvMg9OdSWnzINdXckbzIO3dCUz82ClK1kxD97QlZwyD2ZdySnz4ImuZJd5MOtKVsyDU13JLvNgV1eyayAicqmBiMilBiIilxqIiFxqICJyqa+fX3yYeTDrSnaZB090JTPzYKUrmZkHn9aVzMyDU13Jinkw60pWzIO/oCt5g3lwqivZZR6sdCUz82ClKzllHvyvdSWfNBARudRARORSAxGRSw1ERC719fOL/zjzYFdXsss8ONWVfJJ5sNKVzMyDla5kZh6sdCWnzINTXckp82DWlewyD57oSnaZBytdyS7zYNaVnDIPdnUlK+bBSldyYiAicqmBiMilBiIilxqIiFxqICJyqW8eMg/+qq5kpSuZmQenupIV82DWlayYBytdyS7zYNaVPGEezLqSt5gHs67kLzAPdpkHK13Jrq7kVFeyYh68wTxY6UpOmAefNBARudRARORSAxGRSw1ERC41EBG51Df/gK7kk8yDU13Jinkw60pOmQdPmAe7upJPMg9OdSWfZB7MupInupKZebCrK1kxD051Jbu6khXzYFdX8oauZMU8eMNARORSAxGRSw1ERC41EBG51NfPLx4wD2ZdyYp5cKormZkHK13JLvPgL+hKVsyDWVfyFvNgV1cyMw/+gq5kxTzY1ZV8knmw0pXsMg9WupKZefAXdCW7zINdXcmugYjIpQYiIpcaiIhcaiAicqmBiMilvrlUV7JiHuzqSlbMgzeYB6e6kl1dya6uZMU8WOlKTpkHJ7qSfxvz4AnzYFdXcso8eENXsmIenBiIiFxqICJyqYGIyKUGIiKX+kb+z8yDXV3Jqa7kLV3JzDzY1ZWsdCW7zIOVrmSXebDSlewyDz6pK9nVlZwyD3aZB59kHjzRlZwYiIhcaiAicqmBiMilBiIilxqIiFzqmxd1Jf82XcnMPFjpSlbMg13mwUpXMjMPVrqSmXnwRFcy60pOmQe7upIV82BXV7JiHvxV5sGprmTFPJh1JSvmwawrWTEPVrqSXebBrq5kxTyYdSW7BiIilxqIiFxqICJyqYGIyKUGIiKX+uYfYB78ZebBia5kxTxY6UpOmQe7zINZV7JiHqyYB7OuZJd58ERXcqorOdGVrJgHu7qSFfNg1pWsmAe7upInupKZebDSlczMg5WuZMU8+KSu5MRARORSAxGRSw1ERC41EBG51NfPL0RELjQQEbnUQETkUgMRkUsNREQuNRARudRARORSAxGRSw1ERC41EBG51EBE5FL/DwgV4XmePJ2SAAAAAElFTkSuQmCC",
-      "qrData": "{\"orderNumber\":\"WH-1029\",\"pin\":\"7215\",\"phone\":\"9988776655\",\"total\":6348,\"store\":\"Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE\"}",
-      "paymentStatus": "Paid Online",
-      "paymentMethod": "UPI/Online",
-      "pickupSlot": "Today between 4:00 PM - 6:00 PM",
-      "notes": "Coming in tempo for pickup",
+      "pickupPin": "7182",
+      "qrCodeDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAFACAYAAADNkKWqAAAAAklEQVR4AewaftIAABPmSURBVO3BwZEsxw5lwcOwFgBL6AD9RYEOWEKDNzSb1YRhETXJLPZnXPe//vwNEZELLURELrUQEbnUQkTkUgsRkUstREQutRARudRCRORSCxGRSy1ERC61EBG51EJE5FI/fMg8+K26klPmwaQreco82HUlT5kHv0FX8k3mwaQr2ZkHk67klHlwqiuZmAdPdSU782DSlUzMg11X8pR58Ft1JacWIiKXWoiIXGohInKphYjIpX74B3Ql32QefMI82HUlE/Pgm8yDSVdyqis5ZR6c6kreYh7supK3mAe7ruQp82DSlezMg0lXcqormZgHp8yDSVfyVFfyTebBEwsRkUstREQutRARudRCRORSCxGRS/3wIvPgqa7k39aVTMyDt5gHu65kYh7supJJV3LKPDjVlUzMg1PmwVu6kp158Imu5JR5sOtKnjIPPtGV7MyDbzIPnupK3rAQEbnUQkTkUgsRkUstREQutRARudQP8v/oSnbmwaQrmZgHO/PgE13Jzjx4yjyYdCVPmAeTrmRiHryhK3mqKzllHky6kt/APNh1JRPzYNeV/JctREQutRARudRCRORSCxGRS/1wga7kDebBpCv5pq5kZx68pSvZmQcT8+CbzINJV3LKPJh0Jbuu5DfoSibmwamu5DYLEZFLLURELrUQEbnUQkTkUgsRkUv98KKu5EbmwamuZGIe7LqSiXmw60om5sGpruSpruQp8+ANXcknzINTXcnOPHiqK5mYB79VV/JbLURELrUQEbnUQkTkUgsRkUv98A8wD34z82DXlUzMg11XMjEPJl3Jzjz4X2MeTLqSp8yDXVfyTebBpCs51ZVMzINdVzIxDyZdyc48mHQlE/PglHmw60o+YR78L1mIiFxqISJyqYWIyKUWIiKXWoiIXOqHD3Ul/wXmwaQreUNXMjEPTpkHp8yD36wreco8OGUe7LqSiXkw6UqeMA8mXcnEPNh1JRPz4JR5MOlKTnUl/wULEZFLLURELrUQEbnUQkTkUgsRkUv98CHzYNeVfJN5MOlKTnUlp8yDSVcyMQ92XcknupKdeTDpSnbmwVvMg1PmwVu6kp15MOlKTnUlE/PgVFdyyjyYdCXfZB481ZWcMg+e6kqeWIiIXGohInKp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",
+      "qrData": "{\"orderNumber\":\"WH-1031\",\"pin\":\"7182\",\"phone\":\"9988112233\",\"total\":9522,\"store\":\"Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE\"}",
+      "paymentStatus": "Pending",
+      "paymentMethod": "Pay at Store",
+      "pickupSlot": "Today (Ready in 2-4 Hours)",
+      "notes": "Loading in auto",
       "isPinUsed": true,
-      "createdAt": "2026-10-19T07:10:33.581Z",
+      "createdAt": "2026-10-20T13:26:19.772Z",
       "timeline": [
         {
           "status": "Order Placed",
-          "timestamp": "2026-10-19T07:10:33.581Z",
+          "timestamp": "2026-10-20T13:26:19.772Z",
           "note": "Order created with store pickup reservation at Near Theosophical Women's College, Hampi Road, HOSAPETE."
         },
         {
           "status": "Collected",
-          "timestamp": "2026-10-19T07:10:33.621Z",
+          "timestamp": "2026-10-20T13:26:19.819Z",
           "note": "Verified customer pickup PIN at Hampi Road counter and collected goods."
         }
       ],
-      "collectedAt": "2026-10-19T07:10:33.621Z"
+      "collectedAt": "2026-10-20T13:26:19.819Z"
+    },
+    {
+      "id": "ord-1792501674370",
+      "orderNumber": "WH-1030",
+      "customer": {
+        "name": "Ramesh Sharma",
+        "phone": "9876543210",
+        "customerType": "Contractor",
+        "businessName": "Sharma Woodworks Hospet"
+      },
+      "items": [
+        {
+          "productId": "ply-001",
+          "name": "CenturyPly Club Prime 18mm BWP Marine Plywood",
+          "sku": "WH-PLY-18BWP-01",
+          "brand": "CenturyPly",
+          "unit": "Sheet",
+          "price": 3450,
+          "discount": 8,
+          "finalPrice": 3174,
+          "quantity": 5,
+          "total": 15870,
+          "image": "https://images.unsplash.com/photo-1546484396-fb3fc6f95f98?auto=format&fit=crop&w=800&q=80",
+          "size": "8 x 4 ft",
+          "thickness": "18mm"
+        }
+      ],
+      "subtotal": 15870,
+      "discountTotal": 850,
+      "gstTotal": 2740,
+      "grandTotal": 15870,
+      "status": "Ready for Pickup",
+      "pickupPin": "5623",
+      "paymentStatus": "Pending",
+      "paymentMethod": "Pay at Store",
+      "pickupSlot": "Today (Ready in 2-4 Hours)",
+      "notes": "Loading via auto rickshaw",
+      "isPinUsed": false,
+      "createdAt": "2026-10-20T11:20:35.464Z",
+      "timeline": [
+        {
+          "status": "Order Placed",
+          "timestamp": "2026-10-20T11:20:35.464Z",
+          "note": "Order placed online"
+        },
+        {
+          "status": "Ready for Pickup",
+          "timestamp": "2026-10-20T12:20:35.464Z",
+          "note": "Packed and ready at counter"
+        }
+      ],
+      "qrData": "{\"orderNumber\":\"WH-1030\",\"pin\":\"5623\",\"phone\":\"9876543210\",\"total\":15870,\"store\":\"Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE\"}",
+      "qrCodeDataUrl": "data:image/png;base64,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"
+    },
+    {
+      "id": "ord-1792393833519",
+      "orderNumber": "WH-1029",
+      "customer": {
+        "name": "Suresh Patil",
+        "phone": "9988776655",
+        "customerType": "Carpenter"
+      },
+      "items": [
+        {
+          "productId": "df-001",
+          "name": "Europa Diamond Mortise Lock with Solid Brass Handles",
+          "sku": "WH-LOCK-EUR-01",
+          "brand": "Europa",
+          "unit": "Set",
+          "price": 3650,
+          "discount": 12,
+          "finalPrice": 3212,
+          "quantity": 2,
+          "total": 6424,
+          "image": "https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&w=800&q=80"
+        }
+      ],
+      "subtotal": 6424,
+      "discountTotal": 400,
+      "gstTotal": 1156,
+      "grandTotal": 6424,
+      "status": "Preparing",
+      "pickupPin": "7215",
+      "paymentStatus": "Pending",
+      "paymentMethod": "Pay at Store",
+      "pickupSlot": "Today Evening (4 PM - 7 PM)",
+      "isPinUsed": false,
+      "createdAt": "2026-10-20T09:20:35.464Z",
+      "timeline": [
+        {
+          "status": "Order Placed",
+          "timestamp": "2026-10-20T09:20:35.464Z",
+          "note": "Order placed online"
+        },
+        {
+          "status": "Preparing",
+          "timestamp": "2026-10-20T11:20:35.464Z",
+          "note": "Staged for pickup"
+        }
+      ],
+      "qrData": "{\"orderNumber\":\"WH-1029\",\"pin\":\"7215\",\"phone\":\"9988776655\",\"total\":6424,\"store\":\"Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE\"}",
+      "qrCodeDataUrl": "data:image/png;base64,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"
     },
     {
       "id": "ord-1792393293469",
@@ -1864,47 +1965,49 @@
       "customer": {
         "name": "Kundan Patel",
         "phone": "9845112233",
-        "email": "kundan.patel@example.com",
-        "customerType": "Builder",
-        "businessName": "Gorani Traders"
+        "customerType": "Contractor",
+        "businessName": "Patel Construction"
       },
       "items": [
         {
-          "productId": "prod-1792392947260",
-          "name": "s",
-          "sku": "WH-3917",
+          "productId": "df-013",
+          "name": "Welcome Hardware SS 304 Ball Bearing Butt Hinges 4\" x 3\" x 2.5mm",
+          "sku": "WH-HNG-SS-43",
           "brand": "Welcome Hardware",
-          "unit": "Piece",
-          "price": 450,
-          "discount": 0,
-          "finalPrice": 450,
-          "quantity": 1,
-          "total": 450,
-          "image": "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=800&q=80",
-          "size": "8 inch",
-          "thickness": "3.5 mm"
+          "unit": "Pair",
+          "price": 210,
+          "discount": 8,
+          "finalPrice": 193,
+          "quantity": 6,
+          "total": 1158,
+          "image": "https://images.unsplash.com/photo-1517646287270-a5a9ca602e5c?auto=format&fit=crop&w=800&q=80"
         }
       ],
-      "subtotal": 450,
-      "discountTotal": 0,
-      "gstTotal": 81,
-      "grandTotal": 450,
-      "status": "Order Placed",
+      "subtotal": 1158,
+      "discountTotal": 300,
+      "gstTotal": 840,
+      "grandTotal": 1158,
+      "status": "Confirmed",
       "pickupPin": "9256",
-      "qrCodeDataUrl": "data:image/png;base64,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",
-      "qrData": "{\"orderNumber\":\"WH-1028\",\"pin\":\"9256\",\"phone\":\"9845112233\",\"total\":450,\"store\":\"Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE\"}",
-      "paymentStatus": "Pending",
-      "paymentMethod": "Pay at Store",
-      "pickupSlot": "Today (Ready in 2-4 Hours)",
+      "paymentStatus": "Paid Online",
+      "paymentMethod": "UPI/Online",
+      "pickupSlot": "Tomorrow Morning (10 AM - 1 PM)",
       "isPinUsed": false,
-      "createdAt": "2026-10-19T07:01:33.488Z",
+      "createdAt": "2026-10-20T07:20:35.464Z",
       "timeline": [
         {
           "status": "Order Placed",
-          "timestamp": "2026-10-19T07:01:33.488Z",
-          "note": "Order created with store pickup reservation at Near Theosophical Women's College, Hampi Road, HOSAPETE."
+          "timestamp": "2026-10-20T07:20:35.464Z",
+          "note": "Order placed online"
+        },
+        {
+          "status": "Confirmed",
+          "timestamp": "2026-10-20T08:20:35.464Z",
+          "note": "Confirmed by Jayesh"
         }
-      ]
+      ],
+      "qrData": "{\"orderNumber\":\"WH-1028\",\"pin\":\"9256\",\"phone\":\"9845112233\",\"total\":1158,\"store\":\"Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE\"}",
+      "qrCodeDataUrl": "data:image/png;base64,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pK7klHkwMQ92Xckp82DSlUzMg11XMjEPJl3JzjyYdCWf1JV8K/Ng0pU8ZR6c6kqeMg92XckrzINdVzIxD57qSnbmwVPmwTssREQutRARudRCRORSCxGRSy1ERC716/cfPGQevKIr2ZkHn9SVTMyDXVcyMQ9OdSWvMA/eoSs5ZR5MupJ3MA+e6kom5sGuK5mYB5Ou5JR58FRXcso8mHQln2QenOpKdubBpCuZmAe7ruTUQkTkUgsRkUstREQutRARudRCRORSv37/wZuYB6e6kncxD3ZdySnzYNKVPGUefFJX8pR58FRXcso8eKor2ZkHk65kYh7supKJebDrSibmwTfoSp4yD051Jf9rCxGRSy1ERC61EBG51EJE5FI/vMg8ONWVPGUePNWV7MyDSVey60qeMg8mXcnEPNh1JU+ZB5OuZGceTLqSnXkw6UpOmQev6EpOmQe7rmRiHky6kp15cMo8mHQlE/Ng15V8knkw6UpOdSUT82DXlXzSQkTkUgsRkUstREQutRARudRCRORSP/yDupJXmAenzINTXcnEPHgH82DSlZzqSk51JRPz4JR5MOlKdl3JK8yDXVdyyjyYdCVPdSWfZB68Q1cyMQ8mXcnOPHjKPDjVlZxaiIhcaiEicqmFiMilFiIil1qIiFzq1+8/eIF5cKormZgH36or2ZkHk67klHnwiq7klHmw60om5sEndSUT8+BUVzIxD051JTvzYNKVPGUe7LqSiXnwVFcyMQ92XcnEPHiHrmRiHrxDV3JqISJyqYWIyKUWIiKXWoiIXOqHF3UlO/NgYh5MupL/MvNg15W8wjw41ZWc6kpOmQdPmQeTrmRnHryLefCtupJT5sHEPJh0JU90JRPz4JR5MOlKTpkH77AQEbnUQkTkUgsRkUstREQutRARudSv33/wYebBris5ZR68oivZmQeTrmRnHryiKzllHky6kp158FRXMjEPdl3JxDz4Bl3JO5gHT3Ulp8yDSVeyMw8mXclT5sH/WlfySQsRkUstREQutRARudRCRORSv37/wX+cebDrSibmwa4rmZgHp7qSb2AeTLqSnXkw6Up25sGkK3nKPHiqK3nKPNh1JafMg1d0JafMg0lXcso82HUlT5kHp7qSiXkw6UqeWIiIXGohInKphYjIpRYiIpdaiIhc6ocXmQffqiuZdCU782DSlZzqSibmwSnzYNKV7MyDU13JK8yDXVfyLubBriv5BubBKfNg0pWc6kqe6kom5sE7mAeTruQJ8+CTFiIil1qIiFxqISJyqYWIyKUWIiKX+uEv6Eo+yTx4qiuZmAe7ruQVXcnOPHiFebDrSr6BefBUV/JJ5sGuK3lFV7IzD54yD57qSk51JRPz4FRX8g5dycQ8eIeFiMilFiIil1qIiFxqISJyqV+//+AF5sGuK5mYB091JTvzYNKVnDIPvkFXMjEPdl3JxDz4pK5kZx58g65kYh6c6ko+yTyYdCWnzINJV7IzD75BV/KUebDrSk4tREQutRARudRCRORSCxGRSy1ERC71w6W6kol5cKormZgHu67kKfNg0pXszINJVzIxD3ZdyamuZGIeTLqSp8yDJ7qSTzIPnjIPXmEenOpKnjIP/iULEZFLLURELrUQEbnUQkTkUj/I/5t58A3Mg11X8pR5cKormXQlp8yDSVdyyjyYdCWnzINv1ZU8ZR6cMg8+yTx4RVfyxEJE5FILEZFLLURELrUQEbnUQkTkUj+8UVfyr+lKdubBpCuZmAenzINJV7IzD54yD57qSk6ZB6e6kol5cKormZgH/xrz4FRXMjEPdl3JxDzYdSUT82DSlZwyD051JRPzYNeVnFqIiFxqISJyqYWIyKUWIiKXWoiIXOqHv8A8+GbmwRNdycQ8mHQlp7qSU13JtzIPXtGVPNWVPNGVTMyDU13JxDzYdSUT8+BUV/KKrmRnHky6kp15MOlKJubBJ3UlTyxERC61EBG51EJE5FILEZFL/fr9ByIiF1qIiFxqISJyqYWIyKUWIiKXWoiIXGohInKphYjIpRYiIpdaiIhcaiEicqn/A0Ko7h82OcjoAAAAAElFTkSuQmCC"
     },
     {
       "id": "ord-1792393034868",
@@ -1912,47 +2015,51 @@
       "customer": {
         "name": "Kundan Patel",
         "phone": "9845112233",
-        "email": "kundan.patel@example.com",
-        "customerType": "Builder",
-        "businessName": "Gorani Traders"
+        "customerType": "Contractor"
       },
       "items": [
         {
-          "productId": "prod-1792392947260",
-          "name": "s",
-          "sku": "WH-3917",
-          "brand": "Welcome Hardware",
-          "unit": "Piece",
-          "price": 450,
-          "discount": 0,
-          "finalPrice": 450,
-          "quantity": 1,
-          "total": 450,
-          "image": "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=800&q=80",
-          "size": "8 inch",
-          "thickness": "3.5 mm"
+          "productId": "ff-002",
+          "name": "Ebco Heavy Duty Soft-Close Telescopic Drawer Channels (45kg 18\")",
+          "sku": "WH-EBCO-TC18-02",
+          "brand": "Ebco",
+          "unit": "Pair",
+          "price": 680,
+          "discount": 8,
+          "finalPrice": 625,
+          "quantity": 10,
+          "total": 6250,
+          "image": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80"
         }
       ],
-      "subtotal": 450,
-      "discountTotal": 0,
-      "gstTotal": 81,
-      "grandTotal": 450,
-      "status": "Order Placed",
+      "subtotal": 6250,
+      "discountTotal": 200,
+      "gstTotal": 650,
+      "grandTotal": 6250,
+      "status": "Collected",
       "pickupPin": "3866",
-      "qrCodeDataUrl": "data:image/png;base64,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",
-      "qrData": "{\"orderNumber\":\"WH-1027\",\"pin\":\"3866\",\"phone\":\"9845112233\",\"total\":450,\"store\":\"Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE\"}",
-      "paymentStatus": "Pending",
-      "paymentMethod": "Pay at Store",
-      "pickupSlot": "Today (Ready in 2-4 Hours)",
-      "isPinUsed": false,
-      "createdAt": "2026-10-19T06:57:14.891Z",
+      "paymentStatus": "Paid Online",
+      "paymentMethod": "UPI/Online",
+      "pickupSlot": "Yesterday",
+      "isPinUsed": true,
+      "collectedAt": "2026-10-19T13:20:35.464Z",
+      "collectedBy": "Kundan Patel",
+      "verifiedByStaff": "Neelesh (Admin)",
+      "createdAt": "2026-10-18T13:20:35.464Z",
       "timeline": [
         {
           "status": "Order Placed",
-          "timestamp": "2026-10-19T06:57:14.891Z",
-          "note": "Order created with store pickup reservation at Near Theosophical Women's College, Hampi Road, HOSAPETE."
+          "timestamp": "2026-10-18T13:20:35.464Z",
+          "note": "Order placed online"
+        },
+        {
+          "status": "Collected",
+          "timestamp": "2026-10-19T13:20:35.464Z",
+          "note": "Handover completed"
         }
-      ]
+      ],
+      "qrData": "{\"orderNumber\":\"WH-1027\",\"pin\":\"3866\",\"phone\":\"9845112233\",\"total\":6250,\"store\":\"Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE\"}",
+      "qrCodeDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAFACAYAAADNkKWqAAAAAklEQVR4AewaftIAABPLSURBVO3BwbFcu45FwSVGGYAhfID/psAHDOGBWtNmcMAT1Cnd/7gzf/3+AxGRCw1ERC41EBG51EBE5FIDEZFLDURELjUQEbnUQETkUgMRkUsNREQuNRARudRARORSHx4yD36qrmSXebDSlbzBPFjpSlbMg1lXsmIezLqSJ8yDWVeyYh7MupIV82BXV/KEefBNXcnMPNjVlbzFPNjVlZwyD36qrmTXQETkUgMRkUsNREQuNRARudSHv6Ar+Sbz4C3mwa6uZMU8ONWVzMyDla5kl3lwqivZ1ZWsmAcz8+CJrmRmHuzqSp4wD3Z1JTPzYKUrWTEPZl3JKfNgpSs51ZV8k3lwYiAicqmBiMilBiIilxqIiFxqICJyqQ8vMg9OdSWnzINdXcnMPFgxD3Z1JSvmwa6uZMU8mHUlK13JLvNgV1eyYh78BF3JzDx4oivZZR7MupInupKZefBEVzIzD77JPDjVlbxhICJyqYGIyKUGIiKXGoiIXGogInKpD/L/mAe7upJd5sFKV7JiHszMg7eYB7OuZMU8mJkHK13JN3Ulu7qSFfNgxTzY1ZXsMg92dSUr5sGKeTDrSlbMg1lX8l82EBG51EBE5FIDEZFLDURELvXhUl3JLvNgxTzY1ZU80ZXMzIOVrmRmHjzRlczMg5WuZGYerJgHb+lKZubBSlcyMw+e6Ere0JXsMg9WupIV82BXV3KbgYjIpQYiIpcaiIhcaiAicqmBiMilPryoK/mpzIOVruQN5sGprmTFPJh1JSvmwYp5MOtKTnUlp8yDN3QlK+bBinmwqyuZmQdPdCWzrmTFPPipupKfaiAicqmBiMilBiIilxqIiFzqw19gHvyv6UpWzINZV7JiHqx0JTPzYKUrWTEPvqkrmZkHK13JKfNg1pV8k3mw0pWsmAezrmTFPJh1JSvmwS7zYKUrWTEPdpkHs67kCfPgf8lARORSAxGRSw1ERC41EBG51EBE5FIfHupK/su6kp/KPFjpSmbmwRPmwTd1JafMg13mwawreaIr+de6khXzYJd5sNKV7OpK/gsGIiKXGoiIXGogInKpgYjIpQYiIpf69fsPHjAPZl3JinnwTV3JG8yDla5kxTw41ZX8a+bBT9aVzMyDla7klHmwqyv5JvPgDV3JinnwTV3JGwYiIpcaiIhcaiAicqmBiMilPvwF5sETXcku82DWlayYBytdycw82NWVrJgHK13JG8yDla7klHkw60pWzIOfqitZMQ9mXckTXckJ82ClK1kxD36qrmSXebDSlewyD3Z1JbsGIiKXGoiIXGogInKpgYjIpQYiIpf68Bd0JSvmwYp5MOtKdpkHP5l5cKoreYN5sNKVvKErWTEPdnUlu8yDla7klHnwBvNgpSv5JvNgZh58k3nwRFdyYiAicqmBiMilBiIilxqIiFzq1+8/eMA82NWVrJgHs67kJzAPTnUlM/PgVFeyYh7MupIV8+CbupJT5sGuruQnMA9mXcm3mQe7upKZefCWruSUeTDrSnYNREQuNRARudRARORSAxGRSw1ERC714aGuZGYerJgHK13JzDw41ZWsmAezrmSlK9llHqyYB7u6khXzYGYerHQlp7qSmXmw0pWcMg9mXclKV/JN5sE3mQcrXcnMPFjpSla6kpl5cKorWTEPTpgH3zQQEbnUQETkUgMRkUsNREQuNRARudSv33/wZebBrCtZMQ9mXcmKebCrK1kxD3Z1JSvmwawrecI8ONGVnDIPTnUlu8yDU13JLvNgpSv5qcyDla5kxTzY1ZW8wTzY1ZU8YR7MupJdAxGRSw1ERC41EBG51EBE5FIf/gLzYKUrOdWVzMyDla5kxTyYmQffZB480ZXsMg92mQcrXcmsK9llHqyYB2/pSmbmwUpXMutKTpkHu7qSJ8yDXebBSleyyzz4pq5kZh6sdCVvGIiIXGogInKpgYjIpQYiIpcaiIhc6sM/0JWc6Eqe6Ep2mQezruRUV/KEeTDrSt5iHuzqSk51JbvMgxXzYNaVnDIPVrqSXV3JT2Ae7OpKZubBSleyYh7sMg92mQcrXcmJgYjIpQYiIpcaiIhcaiAicqmBiMilPrzIPFjpSk6YBz+BebDSlczMg1PmwVu6kl3mwawrecI82NWV7DIPTnUlu7qSFfNg1pWsmAe7upK3mAezrmTFPFjpSmbmwamu5A0DEZFLDURELjUQEbnUQETkUr9+/8ED5sGsK1kxD1a6kl3mwawrecI8eENXsmIe/GtdyYp5sKsr2WUerHQlu8yDJ7qSmXmw0pXMzIMnupJvMg9OdSUnzIMnupJd5sGsK1kxD1a6khMDEZFLDURELjUQEbnUQETkUgMRkUt9eKgr+dfMg5WuZFdXsmIezLqSJ7qSmXnwTebBW8yDWVfyhHkw60pOdSW7upJT5sGuruRUV/KEebCrKzllHuzqSmbmwTcNREQuNRARudRARORSAxGRS314yDx4g3mw0pW8wTxY6UpOmQe7upJd5sGuruQtXcnMPFjpSla6klPmwTd1JbOuZJd58Bbz4A1dyU/QlayYB7OuZNdARORSAxGRSw1ERC41EBG51EBE5FIf/oKu5JvMg1NdyYp5MOtKVsyDla5kl3mw0pV8k3kw60p2dSWnzIMnupJd5sGuruSUeTDrSlbMg5WuZGYerHQlu8yDFfPgVFcyMw9WupJZV/JEV3JiICJyqYGIyKUGIiKXGoiIXGogInKpD3+BebDSlZwyD2ZdyRPmwa6u5KfqSt7SlZwwD1a6kl1dySnzYKUrmZkHK+bBSldywjx4wjzYZR6sdCW7upJd5sGurmTFPJh1JSvmwUpXcmIgInKpgYjIpQYiIpcaiIhc6sNDXcnMPHjCPJh1JbvMg1PmwUpXMjMPVrqSbzIPVrqSmXnwk5kHu7qSFfNgl3kw60qeMA9mXclKV/IG8+AJ82DWlayYB7u6kl3mwamu5A0DEZFLDURELjUQEbnUQETkUgMRkUt9eJF5sMs8WOlKZl3JinmwqytZMQ9OmQezruQJ82DWlayYB7OuZMU82NWV7DIPnuhKvqkrmZkHT3QlM/NgV1eyYh6sdCW7upIV82BmHuzqSk51JW8xD2Zdya6BiMilBiIilxqIiFxqICJyqQ8PmQezruSUebBiHrzBPHhLVzIzD/4rzINd5sFbupKZebCrK1kxD1bMg1lXsmIevKErOdWVrJgHM/PgJ+hKVrqSEwMRkUsNREQuNRARudRARORSAxGRS314qCvZZR6c6kpOmQc/VVdyqis51ZXMzIOVrmRmHqx0JafMgxXzYNaVrJgHu7qSFfNgZh6c6kpWzINdXcku82BXV3LKPFjpSnaZB7u6kl0DEZFLDURELjUQEbnUQETkUgMRkUt9eMg8+NfMg5Wu5CcwD95gHrzFPJh1JW8xD2ZdyRNdyYmuZMU8WOlKdpkHu8yDXV3Jqa5kxTzYZR6sdCUnzIMnupITAxGRSw1ERC41EBG51EBE5FK/fv/BD2AerHQlp8yDXV3JzDz4CbqSFfPgm7qSmXmw0pWcMg9OdSXfZB6c6kp2mQcrXcku82DWlZwyD3Z1JSvmwa6uZNdARORSAxGRSw1ERC41EBG51EBE5FK/fv/BA+bBf0FXcso8WOlKZubBSleyYh7MupJT5sGurmTFPPgJupJd5sE3dSUz8+CJrmRmHpzqSlbMg2/qSmbmwUpX8oaBiMilBiIilxqIiFxqICJyqYGIyKU+/HBdyTeZB7Ou5FRX8r/GPNjVlZwyD1a6kl3mwUpXMjMPnuhKvsk8eIN5sNKVnDIPdpkHp8yDWVeyayAicqmBiMilBiIilxqIiFzq1+8/eIl5sKsr2WUePNGVnDAPVrqSFfNg1pWcMg9WupJvMg92dSW7zIOVrmTFPHhDV7LLPNjVlfxk5sGsKzllHqx0Jf/aQETkUgMRkUsNREQuNRARudRARORSH/6BruREV/KEefBNXck3mQenupKZebCrK1kxD1a6klNdycw8WOlK3tCV7DIPVrqSFfNgV1eyyzzYZR6sdCU/gXkw60p2DURELjUQEbnUQETkUgMRkUv9+v0HD5gHs67kLebBG7qSU+bBrq7kCfNg1pWsmAezrmTFPNjVlewyD1a6klPmwU/VlayYB7Ou5AnzYNaVvMU8mHUl32QerHQlK+bBrCvZNRARudRARORSAxGRSw1ERC41EBG51IeHupJd5sFKVzIzD3Z1JSvmwUpXsss8+CbzYKUrmZkHK13Jrq5kl3mw0pXsMg9WupJdXcku82ClK5mZBytdyS7zYKUr2WUevMU8mHUlbzEPTnQlK+bBSldyYiAicqmBiMilBiIilxqIiFxqICJyqV+//+CQeXCqK9llHqx0JbvMg5WuZGYerHQlK+bBqa5kZh6sdCUz8+BUV7JiHuzqSt5iHuzqSk6ZBye6kifMg1lX8hbzYNaVvMU8eENXsmsgInKpgYjIpQYiIpcaiIhc6sND5sGsK3nCPDjRlayYB7u6khXzYNaV3Mg82NWVPGEe7OpKVrqSmXmwYh7MupJTXcmKeTAzD1a6kpWuZGYe/ATmwUpXMjMPVrqSXebBSldyYiAicqmBiMilBiIilxqIiFxqICJyqQ8PdSUz82ClK1npSk6YBytdyRvMgye6kl3mwYp58E1dycw8WOlKTnUlM/NgxTxY6UpmXcmKebDLPNhlHuzqSk51JW8xD/4182ClK3nDQETkUgMRkUsNREQuNRARudSHh8yDXebBqa5k1pWsmAenupJd5sGKeTDrSr6pK3nCPJh1JafMg11dyRPmwa6uZGYerHQlK+bBrq7kJzAPZl3JT2AezLqSJ8yDWVeyayAicqmBiMilBiIilxqIiFxqICJyqV+//+CQefBEVzIzD051JSvmwawreYt5MOtKVsyDb+pKdpkHK13JG8yDU13Jinkw60pWzIOVrmSXeXCqK9llHqx0Jd9kHuzqSmbmwUpXsmIezLqSXQMRkUsNREQuNRARudRARORSAxGRS334C7qSt3Qlu8yDla5kZh7s6kqe6Epm5sFPYB6cMg++qStZMQ9m5sFKV/KvdSXfZh78F5gHbxiIiFxqICJyqYGIyKUGIiKX+vX7Dx4wD3Z1JafMg1NdyS7zYFdXsss8WOlKVsyDWVdyyjxY6Upm5sFKVzIzD1a6kl3mwRNdyS7zYNaVrJgHK13JzDw41ZWsmAezruSbzIOVrmTFPJh1JSvmwawr+aaBiMilBiIilxqIiFxqICJyqYGIyKU+/APmwawr2dWVPGEenOhKVsyDU+bBLvNgpSvZ1ZWsmAezrmTFPDhlHuzqSlbMg1lXsss8eEtXcqor2WUefJN5sNKVzMyDt5gHs65k10BE5FIDEZFLDURELjUQEbnUQETkUr9+/8ED5sGurmTFPHhDV/JN5sGurmTFPPimrmTFPJh1JbvMgye6kpl58ERXMjMPdnUlT5gHb+hKVsyDWVeyYh6c6kpm5sFKV/JN5sFKV3JiICJyqYGIyKUGIiKXGoiIXOrX7z84ZB480ZX8LzEPTnUlK+bBqa7klHnwTV3JKfPgm7qSXebBrCt5wjw41ZXsMg++qSs5ZR7MupJdAxGRSw1ERC41EBG51EBE5FIDEZFL/fr9B19mHsy6kl3mwRNdycw8+KauZMU8WOlKZubBqa5kxTyYdSUr5sFP0JW8wTw41ZXsMg9WupKZebDSlZwyD/61ruSbBiIilxqIiFxqICJyqYGIyKV+/f6D/zjzYFdXsss82NWVrJgHu7qSt5gHs65kl3mw0pWcMg9OdSUz8+CJruSEebDSlayYB6e6kl3mwawrOWUenOpKVsyDWVeyayAicqmBiMilBiIilxqIiFxqICJyqQ8PmQc/VVey0pXMzINTXcmKeTAzD57oSmbmwa6uZMU8+AnMg1lX8k1dyYp5sGIe7OpKTnUlp8yDN5gHK13JG8yDla7kxEBE5FIDEZFLDURELjUQEbnUQETkUh/+gq7km8yDJ8yDXebBrCt5S1eyYh7MupK3dCW7zINTXck3mQezrmSlK9llHpwyD1a6kpl5sNKV7OpKVsyDXV3JG7qSFfNgxTyYdSW7BiIilxqIiFxqICJyqYGIyKU+vMg8ONWVfFNXsss8WOlKTnUlM/NgpSuZmQcrXcmKeTDrSk6ZB2/pSr7JPHhDV/KWruSEefBN5sFKV/KGgYjIpQYiIpcaiIhcaiAicqmBiMilPsj/Yx7s6kpWzIM3dCVv6Up2dSW7zIOVrmRmHqx0JSvmwawrWTEPZl3Jinmw0pW8wTw4ZR6c6kpm5sFKV7JiHuzqSnaZB7u6kl0DEZFLDURELjUQEbnUQETkUh8u1ZWsmAe7zINdXckT5sEu82CXebCrK1kxD2ZdyUpX8k3mwUpXcso8+Kau5A3mwSnz4A3mwRNdyYmBiMilBiIilxqIiFxqICJyqYGIyKU+vKgr+Qm6kpl5cKorWTEPZubBSlfyTV3JinmwqyvZZR6sdCVv6EpWzINZV7LSlewyD051JW8xD2Zdyamu5JR5MOtKVsyDNwxERC41EBG51EBE5FIDEZFLDURELvXhLzAPfjLz4ERXsmIerHQlp7qSN5gHK13JzDxY6Upm5sGprmTFPFjpSt5gHuzqSlbMg1lXsmIe7OpKnuhKZubBSldyyjw4YR6sdCVvGIiIXGogInKpgYjIpQYiIpf69fsPREQuNBARudRARORSAxGRSw1ERC41EBG51EBE5FIDEZFLDURELjUQEbnUQETkUv8HnRjeO9RBSQsAAAAASUVORK5CYII="
     },
     {
       "id": "ord-1792392977179",
@@ -1960,47 +2067,48 @@
       "customer": {
         "name": "Kundan Patel",
         "phone": "9845112233",
-        "email": "kundan.patel@example.com",
-        "customerType": "Builder",
-        "businessName": "Gorani Traders"
+        "customerType": "Contractor"
       },
       "items": [
         {
-          "productId": "prod-1792392947260",
-          "name": "s",
-          "sku": "WH-3917",
-          "brand": "Welcome Hardware",
-          "unit": "Piece",
-          "price": 450,
-          "discount": 0,
-          "finalPrice": 450,
-          "quantity": 1,
-          "total": 450,
-          "image": "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=800&q=80",
-          "size": "8 inch",
-          "thickness": "3.5 mm"
+          "productId": "ply-002",
+          "name": "CenturyPly Club Prime 12mm BWP Marine Plywood",
+          "sku": "WH-PLY-12BWP-02",
+          "brand": "CenturyPly",
+          "unit": "Sheet",
+          "price": 2550,
+          "discount": 6,
+          "finalPrice": 2397,
+          "quantity": 3,
+          "total": 7191,
+          "image": "https://images.unsplash.com/photo-1546484396-fb3fc6f95f98?auto=format&fit=crop&w=800&q=80"
         }
       ],
-      "subtotal": 450,
-      "discountTotal": 0,
-      "gstTotal": 81,
-      "grandTotal": 450,
-      "status": "Order Placed",
+      "subtotal": 7191,
+      "discountTotal": 450,
+      "gstTotal": 1200,
+      "grandTotal": 7191,
+      "status": "Ready for Pickup",
       "pickupPin": "7450",
-      "qrCodeDataUrl": "data:image/png;base64,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",
-      "qrData": "{\"orderNumber\":\"WH-1026\",\"pin\":\"7450\",\"phone\":\"9845112233\",\"total\":450,\"store\":\"Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE\"}",
       "paymentStatus": "Pending",
       "paymentMethod": "Pay at Store",
       "pickupSlot": "Today (Ready in 2-4 Hours)",
       "isPinUsed": false,
-      "createdAt": "2026-10-19T06:56:17.230Z",
+      "createdAt": "2026-10-20T05:20:35.464Z",
       "timeline": [
         {
           "status": "Order Placed",
-          "timestamp": "2026-10-19T06:56:17.230Z",
-          "note": "Order created with store pickup reservation at Near Theosophical Women's College, Hampi Road, HOSAPETE."
+          "timestamp": "2026-10-20T05:20:35.464Z",
+          "note": "Order placed online"
+        },
+        {
+          "status": "Ready for Pickup",
+          "timestamp": "2026-10-20T09:20:35.464Z",
+          "note": "Ready for collection"
         }
-      ]
+      ],
+      "qrData": "{\"orderNumber\":\"WH-1026\",\"pin\":\"7450\",\"phone\":\"9845112233\",\"total\":7191,\"store\":\"Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE\"}",
+      "qrCodeDataUrl": "data:image/png;base64,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"
     },
     {
       "id": "ord-1792392786467",
@@ -2008,51 +2116,43 @@
       "customer": {
         "name": "Test Customer",
         "phone": "9876543210",
-        "customerType": "Contractor"
+        "customerType": "Homeowner"
       },
       "items": [
         {
-          "productId": "ply-001",
-          "name": "CenturyPly Club Prime 18mm BWP Marine Plywood",
-          "sku": "WH-PLY-18BWP-01",
-          "brand": "CenturyPly",
-          "unit": "Sheet",
-          "price": 3450,
-          "discount": 8,
-          "finalPrice": 3174,
+          "productId": "df-001",
+          "name": "Europa Diamond Mortise Lock with Solid Brass Handles",
+          "sku": "WH-LOCK-EUR-01",
+          "brand": "Europa",
+          "unit": "Set",
+          "price": 3650,
+          "discount": 12,
+          "finalPrice": 3212,
           "quantity": 1,
-          "total": 3174,
-          "image": "https://images.unsplash.com/photo-1546484396-fb3fc6f95f98?auto=format&fit=crop&w=800&q=80",
-          "size": "8 x 4 ft",
-          "thickness": "18mm"
+          "total": 3212,
+          "image": "https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&w=800&q=80"
         }
       ],
-      "subtotal": 3174,
-      "discountTotal": 276,
-      "gstTotal": 571,
-      "grandTotal": 3174,
-      "status": "Confirmed",
+      "subtotal": 3212,
+      "discountTotal": 200,
+      "gstTotal": 578,
+      "grandTotal": 3212,
+      "status": "Order Placed",
       "pickupPin": "3263",
-      "qrCodeDataUrl": "data:image/png;base64,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",
-      "qrData": "{\"orderNumber\":\"WH-1025\",\"pin\":\"3263\",\"phone\":\"9876543210\",\"total\":3174,\"store\":\"Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE\"}",
       "paymentStatus": "Pending",
       "paymentMethod": "Pay at Store",
-      "pickupSlot": "Today 5:00 PM",
+      "pickupSlot": "Today (Ready in 2-4 Hours)",
       "isPinUsed": false,
-      "createdAt": "2026-10-19T06:53:06.565Z",
+      "createdAt": "2026-10-20T03:20:35.464Z",
       "timeline": [
         {
           "status": "Order Placed",
-          "timestamp": "2026-10-19T06:53:06.565Z",
-          "note": "Order created with store pickup reservation at Near Theosophical Women's College, Hampi Road, HOSAPETE."
-        },
-        {
-          "status": "Confirmed",
-          "timestamp": "2026-10-19T06:53:06.589Z",
-          "note": "Test note"
+          "timestamp": "2026-10-20T03:20:35.464Z",
+          "note": "Order placed online"
         }
       ],
-      "confirmedAt": "2026-10-19T06:53:06.589Z"
+      "qrData": "{\"orderNumber\":\"WH-1025\",\"pin\":\"3263\",\"phone\":\"9876543210\",\"total\":3212,\"store\":\"Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE\"}",
+      "qrCodeDataUrl": "data:image/png;base64,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"
     },
     {
       "id": "ord-1021",
@@ -2079,59 +2179,28 @@
           "image": "https://images.unsplash.com/photo-1546484396-fb3fc6f95f98?auto=format&fit=crop&w=800&q=80",
           "size": "8 x 4 ft",
           "thickness": "18mm"
-        },
-        {
-          "productId": "df-013",
-          "name": "Welcome Hardware SS 304 Ball Bearing Butt Hinges 4\" x 3\" x 2.5mm",
-          "sku": "WH-HNG-SS-43",
-          "brand": "Welcome Hardware",
-          "unit": "Pair",
-          "price": 210,
-          "discount": 8,
-          "finalPrice": 193,
-          "quantity": 2,
-          "total": 386,
-          "image": "https://images.unsplash.com/photo-1517646287270-a5a9ca602e5c?auto=format&fit=crop&w=800&q=80"
         }
       ],
-      "subtotal": 13082,
+      "subtotal": 12696,
       "discountTotal": 850,
       "gstTotal": 2740,
-      "grandTotal": 13082,
+      "grandTotal": 12696,
       "status": "Ready for Pickup",
       "pickupPin": "4291",
-      "qrCodeDataUrl": "data:image/png;base64,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",
-      "qrData": "{\"orderNumber\":\"WH-1021\",\"pin\":\"4291\",\"phone\":\"9845112233\"}",
       "paymentStatus": "Paid Online",
       "paymentMethod": "UPI/Online",
       "pickupSlot": "Today between 4:00 PM - 7:00 PM",
-      "notes": "Will come in Tata Ace vehicle for loading.",
       "isPinUsed": false,
-      "createdAt": "2026-10-19T02:52:48.563Z",
-      "confirmedAt": "2026-10-19T03:52:48.563Z",
-      "readyAt": "2026-10-19T05:52:48.563Z",
+      "createdAt": "2026-10-20T01:20:35.464Z",
       "timeline": [
         {
           "status": "Order Placed",
-          "timestamp": "2026-10-19T02:52:48.563Z",
-          "note": "Order placed online for store pickup"
-        },
-        {
-          "status": "Confirmed",
-          "timestamp": "2026-10-19T03:52:48.563Z",
-          "note": "Inventory allocated & accepted by store staff"
-        },
-        {
-          "status": "Preparing",
-          "timestamp": "2026-10-19T04:52:48.563Z",
-          "note": "Sheets bundled in plywood warehouse"
-        },
-        {
-          "status": "Ready for Pickup",
-          "timestamp": "2026-10-19T05:52:48.563Z",
-          "note": "Items staged at Hospet dispatch bay"
+          "timestamp": "2026-10-20T01:20:35.464Z",
+          "note": "Order placed"
         }
-      ]
+      ],
+      "qrData": "{\"orderNumber\":\"WH-1021\",\"pin\":\"4291\",\"phone\":\"9845112233\",\"total\":12696,\"store\":\"Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE\"}",
+      "qrCodeDataUrl": "data:image/png;base64,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"
     },
     {
       "id": "ord-1022",
@@ -2163,21 +2232,20 @@
       "grandTotal": 6424,
       "status": "Order Placed",
       "pickupPin": "7814",
-      "qrCodeDataUrl": "data:image/png;base64,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",
-      "qrData": "{\"orderNumber\":\"WH-1022\",\"pin\":\"7814\",\"phone\":\"9480223344\"}",
       "paymentStatus": "Pending",
       "paymentMethod": "Pay at Store",
       "pickupSlot": "Tomorrow Morning (10:00 AM)",
-      "notes": "Please keep brass antique finish only.",
       "isPinUsed": false,
-      "createdAt": "2026-10-19T06:22:48.582Z",
+      "createdAt": "2026-10-19T23:20:35.464Z",
       "timeline": [
         {
           "status": "Order Placed",
-          "timestamp": "2026-10-19T06:22:48.582Z",
-          "note": "Awaiting store confirmation"
+          "timestamp": "2026-10-19T23:20:35.464Z",
+          "note": "Awaiting confirmation"
         }
-      ]
+      ],
+      "qrData": "{\"orderNumber\":\"WH-1022\",\"pin\":\"7814\",\"phone\":\"9480223344\",\"total\":6424,\"store\":\"Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE\"}",
+      "qrCodeDataUrl": "data:image/png;base64,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pSs5MRARudRARORSAxGRSw1ERC41EBG51Df/gK7kk8yDJ8yDXebBrCt5S1eyYh7s6kpOdSW7zINTXcknmQezrmSlK9llHnySebDSlezqSlbMg11dyRu6kk8aiIhcaiAicqmBiMilBiIil/rmRebBqa7kk7qSXebBSldyqiuZmQenupIV82DWlZwyD97SlXySeXCiK/m0ruSEefBJ5sETXcmJgYjIpQYiIpcaiIhcaiAicqmBiMilvpH/i3mwqytZMQ9mXcmKeXDKPDjVlezqSnaZBytdycw8WOlKVsyDWVeyYh7MupIV82ClKzlhHrzFPDjVlczMg5WuZMU82NWV7DIPVsyDWVeyayAicqmBiMilBiIilxqIiFzqm0t1JSvmwS7z4FRXsmIezLqSFfNg1pW8xTyYdSUrXcknmQcrXckp8+BEV7JiHqx0JW8wD06ZB28wD57oSk4MREQuNRARudRARORSAxGRSw1ERC71zYu6kr+gK5mZB6e6khXzYGYerHQlp7qSmXnwlq5kl3mw0pW8oStZMQ9mXclKV7LLPNhlHqx0JW8xD2Zdyamu5JR5MOtKVsyDNwxERC41EBG51EBE5FIDEZFLDURELvXNP8A8+MvMgxNdyYp5sNKV7DIPVrqSXebBrCv5JPPgVFeyYh6sdCVvMA92dSUr5sGsK1kxD3Z1JU90JTPzYKUrOWUenDAPVrqSNwxERC41EBG51EBE5FIDEZFLff38QkTkQgMRkUsNREQuNRARudRARORSAxGRSw1ERC41EBG51EBE5FIDEZFLDURELvV/AIwU4ICZEKTbAAAAAElFTkSuQmCC"
     }
   ],
   "quotes": [
@@ -2189,115 +2257,51 @@
         "phone": "9900112233",
         "email": "vijay.builders@example.com",
         "customerType": "Builder",
-        "businessName": "Vijay Projects Hampi"
+        "businessName": "Vijay Developers Hospet",
+        "gstNumber": "29AABCU9603R1ZM"
       },
       "items": [
         {
           "productId": "ply-001",
-          "productName": "CenturyPly Club Prime 18mm BWP Marine Plywood",
-          "category": "Plywood",
-          "quantity": 40,
+          "name": "CenturyPly Club Prime 18mm BWP Marine Plywood",
+          "sku": "WH-PLY-18BWP-01",
+          "brand": "CenturyPly",
           "unit": "Sheet",
-          "unitPrice": 3174,
-          "discount": 10,
-          "gstRate": 18,
-          "finalPrice": 2856,
-          "notes": "Need direct site batch lot delivery"
-        },
-        {
-          "productId": "wd-001",
-          "productName": "Seasoned CP Teak Wood Rough Sawn (Central Province)",
-          "category": "Wood & Boards",
-          "quantity": 15,
-          "unit": "Cubic Feet (CFT)",
-          "unitPrice": 4800,
-          "discount": 5,
-          "gstRate": 18,
-          "finalPrice": 4560
+          "price": 3450,
+          "discount": 15,
+          "finalPrice": 2933,
+          "quantity": 40,
+          "total": 117320
         }
       ],
-      "notes": "Requirements for luxury villa project near Tungabhadra Dam road.",
-      "adminNotes": "Offered 10% special project contractor discount.",
-      "subtotal": 182640,
-      "discountTotal": 15000,
-      "gstTotal": 30175,
-      "grandTotal": 197815,
-      "status": "Ready",
-      "createdAt": "2026-10-17T06:52:48.597Z",
-      "validUntil": "2026-11-02T06:52:48.597Z"
+      "subtotal": 117320,
+      "discountTotal": 20680,
+      "gstTotal": 21118,
+      "grandTotal": 117320,
+      "status": "Submitted",
+      "validUntil": "2026-11-03T13:20:35.662Z",
+      "notes": "40 sheets commercial plywood for residential interior ward project.",
+      "createdAt": "2026-10-20T11:20:35.662Z"
     }
   ],
   "notifications": [
     {
-      "id": "notif-1792393833581",
-      "title": "NEW ORDER RECEIVED #WH-1029",
-      "message": "Suresh Patil ordered 1 items totaling ₹6,348. Pickup PIN: 7215",
+      "id": "notif-1792502779772",
+      "title": "NEW ORDER RECEIVED #WH-1031",
+      "message": "Sanjay Singhania ordered 1 items totaling ₹9,522. Pickup PIN: 7182",
       "type": "order",
-      "orderId": "ord-1792393833519",
-      "timestamp": "2026-10-19T07:10:33.596Z",
-      "isRead": false
-    },
-    {
-      "id": "notif-1792393293488",
-      "title": "NEW ORDER RECEIVED #WH-1028",
-      "message": "Kundan Patel ordered 1 items totaling ₹450. Pickup PIN: 9256",
-      "type": "order",
-      "orderId": "ord-1792393293469",
-      "timestamp": "2026-10-19T07:01:33.488Z",
-      "isRead": false
-    },
-    {
-      "id": "notif-1792393034891",
-      "title": "NEW ORDER RECEIVED #WH-1027",
-      "message": "Kundan Patel ordered 1 items totaling ₹450. Pickup PIN: 3866",
-      "type": "order",
-      "orderId": "ord-1792393034868",
-      "timestamp": "2026-10-19T06:57:14.891Z",
-      "isRead": false
-    },
-    {
-      "id": "notif-1792392977230",
-      "title": "NEW ORDER RECEIVED #WH-1026",
-      "message": "Kundan Patel ordered 1 items totaling ₹450. Pickup PIN: 7450",
-      "type": "order",
-      "orderId": "ord-1792392977179",
-      "timestamp": "2026-10-19T06:56:17.246Z",
-      "isRead": false
-    },
-    {
-      "id": "notif-1792392786565",
-      "title": "NEW ORDER RECEIVED #WH-1025",
-      "message": "Test Customer ordered 1 items totaling ₹3,174. Pickup PIN: 3263",
-      "type": "order",
-      "orderId": "ord-1792392786467",
-      "timestamp": "2026-10-19T06:53:06.565Z",
+      "orderId": "ord-1792502779719",
+      "timestamp": "2026-10-20T13:26:19.787Z",
       "isRead": false
     },
     {
       "id": "notif-01",
-      "title": "NEW ORDER RECEIVED #WH-1022",
-      "message": "Anand Kulkarni placed an order of ₹6,424 for 2 items. Method: Pay at Store.",
+      "title": "NEW ORDER RECEIVED #WH-1030",
+      "message": "Ramesh Sharma placed order WH-1030 totaling ₹17,750. Pickup PIN: 5623",
       "type": "order",
-      "orderId": "ord-1022",
-      "timestamp": "2026-10-19T06:22:48.597Z",
+      "orderId": "ord-1792501674370",
+      "timestamp": "2026-10-20T13:20:35.662Z",
       "isRead": false
-    },
-    {
-      "id": "notif-02",
-      "title": "ORDER READY FOR PICKUP #WH-1021",
-      "message": "Order #WH-1021 is packed and staged at dispatch bay. PIN: 4291.",
-      "type": "pickup",
-      "orderId": "ord-1021",
-      "timestamp": "2026-10-19T05:52:48.597Z",
-      "isRead": false
-    },
-    {
-      "id": "notif-03",
-      "title": "LOW STOCK ALERT: Yale Smart Lock",
-      "message": "Stock has dropped to 12 units (Threshold: 3).",
-      "type": "low_stock",
-      "timestamp": "2026-10-18T06:52:48.597Z",
-      "isRead": true
     }
   ],
   "storeSettings": {
@@ -2378,140 +2382,23 @@
   ],
   "inventoryLogs": [
     {
-      "id": "inv-1792392786467-m5tw",
+      "id": "inv-1792502779719-i09u",
       "productId": "ply-001",
       "productName": "CenturyPly Club Prime 18mm BWP Marine Plywood",
       "sku": "WH-PLY-18BWP-01",
-      "change": -1,
+      "change": -3,
       "previousStock": 85,
       "newStock": 85,
       "type": "order_reservation",
-      "orderId": "ord-1792392786467",
-      "reason": "Reserved 1 units for Order #WH-1025",
-      "timestamp": "2026-10-19T06:53:06.467Z",
-      "byUser": "Customer Online Order"
-    },
-    {
-      "id": "inv-1792392977179-epqu",
-      "productId": "prod-1792392947260",
-      "productName": "s",
-      "sku": "WH-3917",
-      "change": -1,
-      "previousStock": 25,
-      "newStock": 25,
-      "type": "order_reservation",
-      "orderId": "ord-1792392977179",
-      "reason": "Reserved 1 units for Order #WH-1026",
-      "timestamp": "2026-10-19T06:56:17.179Z",
-      "byUser": "Customer Online Order"
-    },
-    {
-      "id": "inv-1792393034868-b8c8",
-      "productId": "prod-1792392947260",
-      "productName": "s",
-      "sku": "WH-3917",
-      "change": -1,
-      "previousStock": 25,
-      "newStock": 25,
-      "type": "order_reservation",
-      "orderId": "ord-1792393034868",
-      "reason": "Reserved 1 units for Order #WH-1027",
-      "timestamp": "2026-10-19T06:57:14.868Z",
-      "byUser": "Customer Online Order"
-    },
-    {
-      "id": "inv-1792393293469-b7br",
-      "productId": "prod-1792392947260",
-      "productName": "s",
-      "sku": "WH-3917",
-      "change": -1,
-      "previousStock": 25,
-      "newStock": 25,
-      "type": "order_reservation",
-      "orderId": "ord-1792393293469",
-      "reason": "Reserved 1 units for Order #WH-1028",
-      "timestamp": "2026-10-19T07:01:33.469Z",
-      "byUser": "Customer Online Order"
-    },
-    {
-      "id": "inv-1792393833519-y1i6",
-      "productId": "ply-001",
-      "productName": "CenturyPly Club Prime 18mm BWP Marine Plywood",
-      "sku": "WH-PLY-18BWP-01",
-      "change": -2,
-      "previousStock": 85,
-      "newStock": 85,
-      "type": "order_reservation",
-      "orderId": "ord-1792393833519",
-      "reason": "Reserved 2 units for Order #WH-1029",
-      "timestamp": "2026-10-19T07:10:33.519Z",
+      "orderId": "ord-1792502779719",
+      "reason": "Reserved 3 units for Order #WH-1031",
+      "timestamp": "2026-10-20T13:26:19.719Z",
       "byUser": "Customer Online Order"
     }
   ],
   "reviews": [],
-  "orderCounter": 1029,
+  "orderCounter": 1031,
   "quoteCounter": 501,
-  "priceHistory": [
-    {
-      "id": "ph-init-1",
-      "productId": "ply-001",
-      "productName": "CenturyPly Club Prime 18mm BWP Marine Plywood",
-      "sku": "WH-PLY-18BWP-01",
-      "unit": "Sheet",
-      "previousPrice": 2350,
-      "newPrice": 3450,
-      "previousDiscount": 0,
-      "newDiscount": 8,
-      "previousFinalPrice": 2350,
-      "newFinalPrice": 3174,
-      "gstRate": 18,
-      "changedBy": "Store Owner",
-      "changedByRole": "OWNER",
-      "reason": "Timber raw material price revision by manufacturer",
-      "date": "10 Sep 2026",
-      "time": "11:30 AM",
-      "timestamp": "2026-10-14T06:52:48.503Z"
-    },
-    {
-      "id": "ph-init-2",
-      "productId": "df-001",
-      "productName": "Europa Diamond Mortise Lock with Solid Brass Handles",
-      "sku": "WH-LOCK-EUR-01",
-      "unit": "Set",
-      "previousPrice": 2200,
-      "newPrice": 3650,
-      "previousDiscount": 5,
-      "newDiscount": 12,
-      "previousFinalPrice": 2090,
-      "newFinalPrice": 3212,
-      "gstRate": 18,
-      "changedBy": "Ramesh Sharma (Manager)",
-      "changedByRole": "MANAGER",
-      "reason": "Festive contractor promotional discount update",
-      "date": "12 Sep 2026",
-      "time": "02:15 PM",
-      "timestamp": "2026-10-16T06:52:48.503Z"
-    },
-    {
-      "id": "ph-init-3",
-      "productId": "df-013",
-      "productName": "Welcome Hardware SS 304 Ball Bearing Butt Hinges 4\" x 3\" x 2.5mm",
-      "sku": "WH-HNG-SS-43",
-      "unit": "Pair",
-      "previousPrice": 1250,
-      "newPrice": 210,
-      "previousDiscount": 5,
-      "newDiscount": 8,
-      "previousFinalPrice": 1188,
-      "newFinalPrice": 193,
-      "gstRate": 18,
-      "changedBy": "Store Owner",
-      "changedByRole": "OWNER",
-      "reason": "Quarterly price revision by Pidilite Industries",
-      "date": "14 Sep 2026",
-      "time": "09:45 AM",
-      "timestamp": "2026-10-18T06:52:48.503Z"
-    }
-  ],
+  "priceHistory": [],
   "allowManagerPriceEdit": true
 }

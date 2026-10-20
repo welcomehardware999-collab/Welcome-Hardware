@@ -20,6 +20,7 @@ import { useStore } from '../../context/StoreContext';
 import { fetchOrders, fetchProducts, updateOrderStatus } from '../../lib/api';
 import { Order, Product } from '../../types';
 import { InvoiceModal } from '../../components/common/InvoiceModal';
+import { LOGO_URL } from '../../lib/assets';
 
 interface AdminDashboardProps {
   navigate: (path: string) => void;
@@ -106,7 +107,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ navigate }) => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
         <div className="flex items-center gap-4">
           <img
-            src="/welcome-hardware-logo.svg"
+            src={LOGO_URL}
             alt="Welcome Hardware"
             className="w-14 h-14 object-contain rounded-full shadow-xs border border-slate-200 p-0.5 shrink-0 bg-white"
           />

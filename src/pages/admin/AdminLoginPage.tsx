@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, AlertTriangle, Store, Loader2, Eye, EyeOff, ShieldCheck, UserCheck } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
+import { LOGO_URL } from '../../lib/assets';
 
 interface AdminLoginPageProps {
   navigate: (path: string) => void;
@@ -48,13 +49,13 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ navigate }) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 selection:bg-amber-500 selection:text-slate-950">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center py-8 sm:py-12 px-4 sm:px-6 lg:px-8 selection:bg-amber-500 selection:text-slate-950">
       
       {/* Brand Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center space-y-3">
         <div className="inline-block bg-white p-2.5 rounded-2xl shadow-2xl border border-slate-800">
           <img
-            src="/welcome-hardware-logo.svg"
+            src={LOGO_URL}
             alt="Welcome Hardware"
             className="w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-xl mx-auto"
           />
@@ -113,7 +114,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ navigate }) => {
                     setAdminId(e.target.value);
                     setError(null);
                   }}
-                  className="w-full text-sm font-medium bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3.5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
+                  className="w-full text-base sm:text-sm font-medium bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3.5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
                   placeholder="Enter authorized Admin ID"
                   autoComplete="username"
                   autoCapitalize="none"
@@ -141,7 +142,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ navigate }) => {
                     setPassword(e.target.value);
                     setError(null);
                   }}
-                  className="w-full text-sm font-medium bg-slate-950 border border-slate-800 rounded-xl py-2.5 pl-3.5 pr-10 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
+                  className="w-full text-base sm:text-sm font-medium bg-slate-950 border border-slate-800 rounded-xl py-2.5 pl-3.5 pr-10 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
                   placeholder="Enter admin password"
                   autoComplete="current-password"
                 />
