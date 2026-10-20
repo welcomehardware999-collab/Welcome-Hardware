@@ -1,39 +1,58 @@
+
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Welcome Hardware</title>
-    <meta name="description" content="Professional e-commerce and store management platform for Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE. Online ordering with store pickup, live inventory, bulk quotes, and physical store operations." />
+
+    <meta
+      name="description"
+      content="Professional e-commerce and store management platform for Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE. Online ordering with store pickup, live inventory, bulk quotes, and physical store operations."
+    />
     <meta property="og:title" content="Welcome Hardware" />
-    <meta property="og:description" content="Professional e-commerce and store management platform for Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE. Online ordering with store pickup, live inventory, bulk quotes, and physical store operations." />
+    <meta
+      property="og:description"
+      content="Professional e-commerce and store management platform for Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE. Online ordering with store pickup, live inventory, bulk quotes, and physical store operations."
+    />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/welcome-hardware-logo.svg" />
-    <link rel="apple-touch-icon" href="/welcome-hardware-logo.svg" />
-    <link rel="manifest" href="/manifest.json" />
+
+    <link rel="icon" type="image/svg+xml" href="./welcome-hardware-logo.svg" />
+    <link rel="apple-touch-icon" href="./welcome-hardware-logo.svg" />
+    <link rel="manifest" href="./manifest.json" />
+
     <meta name="theme-color" content="#0F172A" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Welcome Hardware" />
-    <script type="text/javascript">
+
+    <script>
       // GitHub Pages SPA router redirect decoder
-      (function(l) {
+      (function (l) {
         if (l.search && l.search[1] === '/') {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&');
-          }).join('?');
-          window.history.replaceState(null, null,
+          var decoded = l.search
+            .slice(1)
+            .split('&')
+            .map(function (s) {
+              return s.replace(/~and~/g, '&');
+            })
+            .join('?');
+
+          window.history.replaceState(
+            null,
+            null,
             l.pathname.slice(0, -1) + decoded + l.hash
           );
         }
-      }(window.location));
+      })(window.location);
     </script>
   </head>
+
   <body class="bg-slate-50 text-slate-900 antialiased selection:bg-amber-200 selection:text-amber-950">
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="./src/main.tsx"></script>
   </body>
 </html>
-
