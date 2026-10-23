@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Phone, Clock, Mail, ShieldCheck, Download, Calculator, Sparkles, CheckCircle2 } from 'lucide-react';
+import { MapPin, Phone, Clock, Mail, Download, Calculator, Sparkles, CheckCircle2 } from 'lucide-react';
 import { useStore } from '../../context/StoreContext';
 import { PWAInstallButton } from './PWAInstallButton';
 import { getAssetUrl, LOGO_URL } from '../../lib/assets';
@@ -184,17 +184,6 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
 
             <div className="pt-2">
               <PWAInstallButton />
-            </div>
-
-            <div className="pt-2 border-t border-slate-800">
-              <button
-                onClick={() => navigate('/admin')}
-                id="footer-admin-login-link"
-                className="inline-flex items-center gap-1.5 text-slate-400 hover:text-amber-400 text-xs transition"
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-500" />
-                <span>Store Management (Admin Login)</span>
-              </button>
             </div>
           </div>
         </div>

@@ -17,9 +17,139 @@ import {
   INITIAL_STAFF 
 } from '../data/mockData';
 
-const API_BASE = '/api';
+// ---------------- BACKEND API CONFIGURATION & RESOLUTION ----------------
+export function getCustomBackendUrl(): string {
+  try {
+    return localStorage.getItem('wh_backend_api_url') || '';
+  } catch {
+    return '';
+  }
+}
 
-// In-memory admin authentication session backed by sessionStorage & localStorage for seamless navigation & refresh
+export function setCustomBackendUrl(url: string): void {
+  try {
+    if (url && url.trim()) {
+      localStorage.setItem('wh_backend_api_url', url.trim());
+    } else {
+      localStorage.removeItem('wh_backend_api_url');
+    }
+  } catch {}
+}
+
+export function getApiBaseUrl(): string {
+  let url = '';
+  // 1. User or Admin configured custom endpoint in localStorage
+  try {
+    const custom = localStorage.getItem('wh_backend_api_url');
+    if (custom && custom.trim()) {
+      url = custom.trim();
+    }
+  } catch {}
+
+  // 2. Build-time environment variable (e.g. set during GitHub Actions or .env)
+  if (!url) {
+    const envUrl = (import.meta as any).env?.VITE_API_URL || (import.meta as any).env?.VITE_API_BASE_URL;
+    if (envUrl && typeof envUrl === 'string' && envUrl.trim()) {
+      url = envUrl.trim();
+    }
+  }
+
+  // 3. Normalize configured URL
+  if (url) {
+    url = url.replace(/\/+$/, '');
+    if (!url.endsWith('/api')) {
+      url += '/api';
+    }
+    return url;
+  }
+
+  // 4. Localhost or same-origin development/production server
+  if (typeof window !== 'undefined') {
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    if (isLocalhost) {
+      if (window.location.port && window.location.port !== '3000') {
+        return `${window.location.protocol}//${window.location.hostname}:3000/api`;
+      }
+      return '/api';
+    }
+  }
+
+  return '/api';
+}
+
+export function isBackendConfigured(): boolean {
+  if (typeof window === 'undefined') return true;
+  const isGithubPages = window.location.hostname.endsWith('github.io');
+  if (!isGithubPages) return true;
+
+  const custom = getCustomBackendUrl();
+  if (custom && custom.trim()) return true;
+
+  const envUrl = (import.meta as any).env?.VITE_API_URL || (import.meta as any).env?.VITE_API_BASE_URL;
+  if (envUrl && typeof envUrl === 'string' && envUrl.trim()) return true;
+
+  return false;
+}
+
+export async function testBackendConnection(targetUrl?: string): Promise<{ success: boolean; message: string; details?: any }> {
+  let baseUrl = targetUrl ? targetUrl.trim().replace(/\/+$/, '') : getApiBaseUrl();
+  if (!baseUrl.endsWith('/api')) {
+    baseUrl += '/api';
+  }
+  const endpoint = `${baseUrl}/health`;
+  try {
+    const res = await fetch(endpoint, {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!res.ok) {
+      return {
+        success: false,
+        message: `Backend responded with HTTP ${res.status}: ${res.statusText}`
+      };
+    }
+    const data = await res.json().catch(() => ({}));
+    if (data.status === 'ok') {
+      return {
+        success: true,
+        message: `Connected to ${data.store || 'Welcome Hardware'} backend successfully!`,
+        details: data
+      };
+    }
+    return {
+      success: false,
+      message: `Unexpected response from server: ${JSON.stringify(data)}`
+    };
+  } catch (err: any) {
+    return {
+      success: false,
+      message: `Could not connect to ${baseUrl}: ${err.message || 'Network error'}`
+    };
+  }
+}
+
+async function parseErrorResponse(res: Response, defaultMessage: string): Promise<string> {
+  if (res.status === 405) {
+    const host = typeof window !== 'undefined' ? window.location.hostname : 'static host';
+    return `Server returned 405 Method Not Allowed. The current host (${host}) does not support API POST requests. GitHub Pages is static hosting only. Please connect your live backend API URL in the Backend Settings below or set VITE_API_URL.`;
+  }
+  try {
+    const contentType = res.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      const data = await res.json();
+      return data.error || data.message || defaultMessage;
+    }
+    const text = await res.text();
+    if (text.includes('<!DOCTYPE') || text.includes('<html')) {
+      return `Backend server returned an HTML error page (HTTP ${res.status}). Verify that the API server is deployed and running.`;
+    }
+    return text || defaultMessage;
+  } catch {
+    return defaultMessage;
+  }
+}
+
+// ---------------- ADMIN AUTHENTICATION SESSION ----------------
 let inMemoryAdminToken: string | null = null;
 let inMemoryAdminUser: { role?: string; name?: string; id?: string } | null = null;
 
@@ -65,11 +195,10 @@ export function clearAdminSession() {
   } catch {}
 }
 
-// Backward-compatible exports
+// Backward-compatible aliases
 export const setInMemoryAdminSession = setAdminSession;
 export const clearInMemoryAdminSession = clearAdminSession;
 
-// Helper to attach admin authentication context to administrative API requests
 export function getAdminHeaders(): Record<string, string> {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json'
@@ -84,9 +213,11 @@ export function getAdminHeaders(): Record<string, string> {
   return headers;
 }
 
+// ---------------- STORE SETTINGS ----------------
 export async function fetchStoreSettings(): Promise<StoreSettings> {
+  const apiBase = getApiBaseUrl();
   try {
-    const res = await fetch(`${API_BASE}/store-info`);
+    const res = await fetch(`${apiBase}/store-info`);
     if (!res.ok) throw new Error('Failed to fetch store info');
     return await res.json();
   } catch {
@@ -95,29 +226,39 @@ export async function fetchStoreSettings(): Promise<StoreSettings> {
 }
 
 export async function updateStoreSettings(settings: Partial<StoreSettings>): Promise<{ success: boolean; settings: StoreSettings }> {
+  const apiBase = getApiBaseUrl();
   try {
-    const res = await fetch(`${API_BASE}/store-info`, {
+    const res = await fetch(`${apiBase}/store-info`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getAdminHeaders(),
+      credentials: 'include',
       body: JSON.stringify(settings)
     });
-    if (!res.ok) throw new Error('Failed to update store settings');
+    if (!res.ok) {
+      const errMsg = await parseErrorResponse(res, 'Failed to update store settings');
+      throw new Error(errMsg);
+    }
     return await res.json();
-  } catch {
+  } catch (err: any) {
+    if (err.message && !err.message.includes('Failed to fetch')) {
+      throw err;
+    }
     const merged = { ...INITIAL_STORE_SETTINGS, ...settings };
     return { success: true, settings: merged };
   }
 }
 
+// ---------------- PRODUCTS ----------------
 export async function fetchProducts(params: Record<string, string> = {}): Promise<Product[]> {
+  const apiBase = getApiBaseUrl();
   try {
     const query = new URLSearchParams(params).toString();
-    const url = query ? `${API_BASE}/products?${query}` : `${API_BASE}/products`;
+    const url = query ? `${apiBase}/products?${query}` : `${apiBase}/products`;
     const res = await fetch(url);
     if (!res.ok) throw new Error('Failed to fetch products');
     return await res.json();
   } catch {
-    // If backend is unavailable (e.g. static GitHub Pages), serve store product catalogue
+    // If backend is unreachable, serve initial product catalog as graceful offline fallback
     let list: Product[] = [...INITIAL_PRODUCTS];
     if (params.category) {
       const c = params.category.toLowerCase();
@@ -152,8 +293,9 @@ export async function fetchProducts(params: Record<string, string> = {}): Promis
 }
 
 export async function fetchProductById(id: string): Promise<{ product: Product; related: Product[]; reviews: any[] }> {
+  const apiBase = getApiBaseUrl();
   try {
-    const res = await fetch(`${API_BASE}/products/${id}`);
+    const res = await fetch(`${apiBase}/products/${id}`);
     if (!res.ok) throw new Error('Failed to fetch product details');
     return await res.json();
   } catch {
@@ -164,27 +306,31 @@ export async function fetchProductById(id: string): Promise<{ product: Product; 
 }
 
 export async function createProduct(productData: Partial<Product>): Promise<Product> {
-  const res = await fetch(`${API_BASE}/products`, {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/products`, {
     method: 'POST',
     headers: getAdminHeaders(),
+    credentials: 'include',
     body: JSON.stringify(productData)
   });
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error || 'Failed to create product');
+    const errMsg = await parseErrorResponse(res, 'Failed to create product');
+    throw new Error(errMsg);
   }
   return res.json();
 }
 
 export async function updateProduct(id: string, updates: Partial<Product>): Promise<Product> {
-  const res = await fetch(`${API_BASE}/products/${id}`, {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/products/${id}`, {
     method: 'PUT',
     headers: getAdminHeaders(),
+    credentials: 'include',
     body: JSON.stringify(updates)
   });
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error || 'Failed to update product');
+    const errMsg = await parseErrorResponse(res, 'Failed to update product');
+    throw new Error(errMsg);
   }
   return res.json();
 }
@@ -193,14 +339,16 @@ export async function updateProductPrice(
   id: string,
   payload: UpdatePricePayload
 ): Promise<{ success: boolean; product: Product; history: PriceHistoryEntry }> {
-  const res = await fetch(`${API_BASE}/products/${id}/price`, {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/products/${id}/price`, {
     method: 'POST',
     headers: getAdminHeaders(),
+    credentials: 'include',
     body: JSON.stringify(payload)
   });
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error || 'Failed to update product price');
+    const errMsg = await parseErrorResponse(res, 'Failed to update product price');
+    throw new Error(errMsg);
   }
   return res.json();
 }
@@ -208,21 +356,24 @@ export async function updateProductPrice(
 export async function bulkUpdateProductPrices(
   updates: { productId: string; price?: number; discount?: number; reason?: string }[]
 ): Promise<{ success: boolean; updatedCount: number; products: Product[]; history: PriceHistoryEntry[] }> {
-  const res = await fetch(`${API_BASE}/products/bulk-prices`, {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/products/bulk-prices`, {
     method: 'POST',
     headers: getAdminHeaders(),
+    credentials: 'include',
     body: JSON.stringify({ updates })
   });
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error || 'Failed to update bulk prices');
+    const errMsg = await parseErrorResponse(res, 'Failed to update bulk prices');
+    throw new Error(errMsg);
   }
   return res.json();
 }
 
 export async function fetchPriceHistory(productId?: string): Promise<PriceHistoryEntry[]> {
+  const apiBase = getApiBaseUrl();
   const query = productId ? `?productId=${encodeURIComponent(productId)}` : '';
-  const res = await fetch(`${API_BASE}/price-history${query}`);
+  const res = await fetch(`${apiBase}/price-history${query}`);
   if (!res.ok) throw new Error('Failed to fetch price history');
   return res.json();
 }
@@ -230,7 +381,8 @@ export async function fetchPriceHistory(productId?: string): Promise<PriceHistor
 export async function validateCartPrices(
   items: { productId: string; expectedFinalPrice: number }[]
 ): Promise<CartPriceValidationResult> {
-  const res = await fetch(`${API_BASE}/cart/validate-prices`, {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/cart/validate-prices`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ items })
@@ -240,99 +392,128 @@ export async function validateCartPrices(
 }
 
 export async function deleteProduct(id: string): Promise<void> {
-  const res = await fetch(`${API_BASE}/products/${id}`, {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/products/${id}`, {
     method: 'DELETE',
-    headers: getAdminHeaders()
+    headers: getAdminHeaders(),
+    credentials: 'include'
   });
-  if (!res.ok) throw new Error('Failed to delete product');
+  if (!res.ok) {
+    const errMsg = await parseErrorResponse(res, 'Failed to delete product');
+    throw new Error(errMsg);
+  }
 }
 
 export async function deleteProductPermanently(id: string): Promise<{ success: boolean; message: string }> {
-  const res = await fetch(`${API_BASE}/products/${id}/permanent`, {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/products/${id}/permanent`, {
     method: 'DELETE',
-    headers: getAdminHeaders()
+    headers: getAdminHeaders(),
+    credentials: 'include'
   });
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error || 'Failed to permanently delete product');
+    const errMsg = await parseErrorResponse(res, 'Failed to permanently delete product');
+    throw new Error(errMsg);
   }
   return res.json();
 }
 
 export async function bulkDeleteProductsPermanently(productIds: string[]): Promise<{ success: boolean; count: number; message: string }> {
-  const res = await fetch(`${API_BASE}/products/bulk-delete`, {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/products/bulk-delete`, {
     method: 'POST',
     headers: getAdminHeaders(),
+    credentials: 'include',
     body: JSON.stringify({ productIds })
   });
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error || 'Failed to permanently delete selected products');
+    const errMsg = await parseErrorResponse(res, 'Failed to permanently delete selected products');
+    throw new Error(errMsg);
   }
   return res.json();
 }
 
 export async function setProductStatus(id: string, status: 'ACTIVE' | 'INACTIVE'): Promise<Product> {
-  const res = await fetch(`${API_BASE}/products/${id}/status`, {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/products/${id}/status`, {
     method: 'PUT',
     headers: getAdminHeaders(),
+    credentials: 'include',
     body: JSON.stringify({ status })
   });
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error || 'Failed to update product status');
+    const errMsg = await parseErrorResponse(res, 'Failed to update product status');
+    throw new Error(errMsg);
   }
   const data = await res.json();
   return data.product;
 }
 
 export async function fetchAdminProducts(params: Record<string, string> = {}): Promise<Product[]> {
+  const apiBase = getApiBaseUrl();
   const query = new URLSearchParams({ ...params, includeInactive: 'true' }).toString();
-  const res = await fetch(`${API_BASE}/products?${query}`);
+  const res = await fetch(`${apiBase}/products?${query}`, {
+    headers: getAdminHeaders(),
+    credentials: 'include'
+  });
   if (!res.ok) throw new Error('Failed to fetch admin products');
   return res.json();
 }
 
+// ---------------- ADMIN AUTHENTICATION ----------------
 export async function loginAdmin(adminId: string, password: string): Promise<{
   success: boolean;
   token?: string;
   user?: any;
   error?: string;
 }> {
+  const trimmedId = adminId?.trim();
+  const trimmedPw = password?.trim();
+
+  if (!trimmedId) {
+    return { success: false, error: 'Please enter your Admin ID.' };
+  }
+  if (!trimmedPw) {
+    return { success: false, error: 'Please enter your Admin password.' };
+  }
+
+  const apiBase = getApiBaseUrl();
+
+  // If running on GitHub Pages without a configured backend
+  if (typeof window !== 'undefined' && window.location.hostname.endsWith('github.io') && !isBackendConfigured()) {
+    return {
+      success: false,
+      error: 'Backend server not configured. GitHub Pages serves static content only and cannot process server-side authentication. Please enter your live backend server URL in the Backend Connection Settings below.'
+    };
+  }
+
   try {
-    const res = await fetch(`${API_BASE}/auth/admin-login`, {
+    const res = await fetch(`${apiBase}/auth/admin-login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify({ adminId, password })
+      body: JSON.stringify({ adminId: trimmedId, password: trimmedPw })
     });
-    const data = await res.json().catch(() => ({}));
-    if (res.ok && data.success && data.token) {
-      setAdminSession(data.token, data.user);
-      return data;
+
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && data.token) {
+        setAdminSession(data.token, data.user);
+        return data;
+      }
+      return { success: false, error: data.error || 'Authentication failed' };
     }
-    return data.error ? data : { success: false, error: data.error || 'Authentication failed' };
-  } catch {
-    // Static hosting fallback (e.g. GitHub Pages without server)
-    const trimmedId = adminId?.trim();
-    const trimmedPw = password?.trim();
-    const validIds = ['Jayesh.WH.4516', 'Neelesh.WH.5297'];
-    if (!validIds.includes(trimmedId)) {
-      return { success: false, error: 'Invalid Admin ID. Only authorized administrators are permitted.' };
-    }
-    if (trimmedPw !== 'ansh.WH.2023') {
-      return { success: false, error: 'Incorrect password. Please verify your credentials and try again.' };
-    }
-    const adminName = trimmedId.startsWith('Jayesh') ? 'Jayesh' : 'Neelesh';
-    const staticToken = `wh-static-${Date.now()}`;
-    const user = {
-      id: trimmedId,
-      name: adminName,
-      email: `${trimmedId.toLowerCase()}@welcomehardware.internal`,
-      role: 'OWNER'
+
+    const errorMsg = await parseErrorResponse(res, 'Authentication failed. Please verify your credentials.');
+    return { success: false, error: errorMsg };
+  } catch (err: any) {
+    const isConnErr = err.message?.includes('Failed to fetch') || err.message?.includes('NetworkError');
+    return {
+      success: false,
+      error: isConnErr
+        ? `Cannot reach backend server at ${apiBase}. Ensure the backend is deployed, running, and accessible.`
+        : (err.message || 'Authentication error occurred.')
     };
-    setAdminSession(staticToken, user);
-    return { success: true, token: staticToken, user };
   }
 }
 
@@ -341,8 +522,9 @@ export async function fetchAdminSession(): Promise<{
   user?: any;
   store?: string;
 }> {
+  const apiBase = getApiBaseUrl();
   try {
-    const res = await fetch(`${API_BASE}/auth/session`, {
+    const res = await fetch(`${apiBase}/auth/session`, {
       headers: getAdminHeaders(),
       credentials: 'include'
     });
@@ -364,7 +546,6 @@ export async function fetchAdminSession(): Promise<{
   }
 }
 
-// Backward-compatibility wrapper for any lingering callers
 export async function verifyAdminPin(pin: string): Promise<any> {
   return loginAdmin('Jayesh.WH.4516', pin);
 }
@@ -374,127 +555,98 @@ export async function fetchAdminStatus(): Promise<{ locked: boolean; attemptsRem
 }
 
 export async function adminLogout(): Promise<void> {
+  const apiBase = getApiBaseUrl();
   try {
-    await fetch(`${API_BASE}/auth/admin-logout`, {
+    await fetch(`${apiBase}/auth/admin-logout`, {
       method: 'POST',
       headers: getAdminHeaders(),
       credentials: 'include'
     });
   } catch {
-    // ignore
+    // Ignore network errors on logout
   } finally {
     clearAdminSession();
   }
 }
 
+// ---------------- ORDERS ----------------
 export async function createOrder(orderPayload: any): Promise<Order> {
+  const apiBase = getApiBaseUrl();
+
+  if (typeof window !== 'undefined' && window.location.hostname.endsWith('github.io') && !isBackendConfigured()) {
+    throw new Error('Backend server is not connected. GitHub Pages serves static files only and cannot persist customer orders or allocate store inventory. Please configure your live backend API URL.');
+  }
+
   try {
-    const res = await fetch(`${API_BASE}/orders`, {
+    const res = await fetch(`${apiBase}/orders`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        ...(orderPayload.idempotencyKey ? { 'X-Idempotency-Key': orderPayload.idempotencyKey } : {})
+      },
       body: JSON.stringify(orderPayload)
     });
+
     if (res.ok) {
       return await res.json();
     }
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || 'Failed to create order');
+
+    const errorMsg = await parseErrorResponse(res, 'Failed to create order');
+    throw new Error(errorMsg);
   } catch (err: any) {
-    if (err.message && !err.message.includes('Failed to fetch') && !err.message.includes('NetworkError')) {
-      throw err;
+    if (err.message?.includes('Failed to fetch') || err.message?.includes('NetworkError')) {
+      throw new Error(`Cannot reach backend server at ${apiBase}. Please verify that the backend server is running and accessible.`);
     }
-    // Static hosting fallback
-    const staticNum = `WH-${Math.floor(1000 + Math.random() * 9000)}`;
-    const pin = Math.floor(1000 + Math.random() * 9000).toString();
-    const newOrd: any = {
-      id: `ord-${Date.now()}`,
-      orderNumber: staticNum,
-      customer: orderPayload.customer,
-      items: orderPayload.items,
-      subtotal: 1000,
-      discountTotal: 0,
-      gstTotal: 180,
-      grandTotal: 1180,
-      status: 'Order Placed',
-      pickupPin: pin,
-      pickupSlot: orderPayload.pickupSlot || 'Ready for pickup in 2-4 hours',
-      paymentMethod: orderPayload.paymentMethod,
-      paymentStatus: 'Pending',
-      createdAt: new Date().toISOString()
-    };
-    try {
-      const savedOrders = JSON.parse(localStorage.getItem('wh_orders') || '[]');
-      savedOrders.unshift(newOrd);
-      localStorage.setItem('wh_orders', JSON.stringify(savedOrders));
-    } catch {}
-    return newOrd;
+    throw err;
   }
 }
 
 export async function fetchOrders(params: Record<string, string> = {}): Promise<Order[]> {
-  try {
-    const query = new URLSearchParams(params).toString();
-    const url = query ? `${API_BASE}/orders?${query}` : `${API_BASE}/orders`;
-    const res = await fetch(url, {
-      headers: getAdminHeaders(),
-      credentials: 'include'
-    });
-    if (res.ok) {
-      return await res.json();
-    }
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || 'Failed to fetch orders');
-  } catch (err: any) {
-    try {
-      const savedOrders = JSON.parse(localStorage.getItem('wh_orders') || '[]');
-      if (params.phone) {
-        const p = params.phone.replace(/\D/g, '');
-        return savedOrders.filter((o: any) => o.customer?.phone?.replace(/\D/g, '').includes(p));
-      }
-      return savedOrders;
-    } catch {
-      return [];
-    }
+  const apiBase = getApiBaseUrl();
+  const query = new URLSearchParams(params).toString();
+  const url = query ? `${apiBase}/orders?${query}` : `${apiBase}/orders`;
+  const res = await fetch(url, {
+    headers: getAdminHeaders(),
+    credentials: 'include'
+  });
+  if (!res.ok) {
+    const errMsg = await parseErrorResponse(res, 'Failed to fetch orders');
+    throw new Error(errMsg);
   }
+  return await res.json();
 }
 
 export async function fetchOrderById(id: string): Promise<Order> {
-  try {
-    const res = await fetch(`${API_BASE}/orders/${id}`, {
-      headers: getAdminHeaders(),
-      credentials: 'include'
-    });
-    if (res.ok) {
-      return await res.json();
-    }
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || 'Failed to fetch order');
-  } catch {
-    try {
-      const savedOrders = JSON.parse(localStorage.getItem('wh_orders') || '[]');
-      const found = savedOrders.find((o: any) => o.id === id || o.orderNumber === id);
-      if (found) return found;
-    } catch {}
-    throw new Error('Order not found');
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/orders/${id}`, {
+    headers: getAdminHeaders(),
+    credentials: 'include'
+  });
+  if (!res.ok) {
+    const errMsg = await parseErrorResponse(res, 'Order not found');
+    throw new Error(errMsg);
   }
+  return await res.json();
 }
 
 export async function updateOrderStatus(orderId: string, status: string, note?: string, user?: string): Promise<Order> {
-  const res = await fetch(`${API_BASE}/orders/${orderId}/status`, {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/orders/${orderId}/status`, {
     method: 'PUT',
     headers: getAdminHeaders(),
     credentials: 'include',
     body: JSON.stringify({ status, note, user })
   });
   if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || 'Failed to update order status');
+    const errMsg = await parseErrorResponse(res, 'Failed to update order status');
+    throw new Error(errMsg);
   }
   return res.json();
 }
 
 export async function verifyPickup(query: { pin?: string; orderNumber?: string }): Promise<{ success: boolean; message: string; order?: Order }> {
-  const res = await fetch(`${API_BASE}/pickup/verify`, {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/pickup/verify`, {
     method: 'POST',
     headers: getAdminHeaders(),
     credentials: 'include',
@@ -508,7 +660,8 @@ export async function verifyPickup(query: { pin?: string; orderNumber?: string }
 }
 
 export async function confirmOrderCollection(orderId: string, staffName: string): Promise<{ success: boolean; message: string; order: Order }> {
-  const res = await fetch(`${API_BASE}/pickup/collect`, {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/pickup/collect`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ orderId, staffName })
@@ -520,129 +673,159 @@ export async function confirmOrderCollection(orderId: string, staffName: string)
   return data;
 }
 
+// ---------------- QUOTES ----------------
 export async function createQuote(quotePayload: any): Promise<Quote> {
-  const res = await fetch(`${API_BASE}/quotes`, {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/quotes`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(quotePayload)
   });
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error || 'Failed to submit quote');
+    const errMsg = await parseErrorResponse(res, 'Failed to submit quote');
+    throw new Error(errMsg);
   }
   return res.json();
 }
 
 export async function fetchQuotes(params: Record<string, string> = {}): Promise<Quote[]> {
+  const apiBase = getApiBaseUrl();
   const query = new URLSearchParams(params).toString();
-  const res = await fetch(`${API_BASE}/quotes?${query}`);
+  const res = await fetch(`${apiBase}/quotes?${query}`);
   if (!res.ok) throw new Error('Failed to fetch quotes');
   return res.json();
 }
 
 export async function fetchQuoteById(id: string): Promise<Quote> {
-  const res = await fetch(`${API_BASE}/quotes/${id}`);
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/quotes/${id}`);
   if (!res.ok) throw new Error('Failed to fetch quote');
   return res.json();
 }
 
 export async function updateQuote(id: string, updates: Partial<Quote>): Promise<Quote> {
-  const res = await fetch(`${API_BASE}/quotes/${id}`, {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/quotes/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(updates)
   });
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error || 'Failed to update quote');
+    const errMsg = await parseErrorResponse(res, 'Failed to update quote');
+    throw new Error(errMsg);
   }
   return res.json();
 }
 
 export async function convertQuoteToOrder(id: string): Promise<{ success: boolean; order: Order }> {
-  const res = await fetch(`${API_BASE}/quotes/${id}/convert-to-order`, {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/quotes/${id}/convert-to-order`, {
     method: 'POST'
   });
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error || 'Failed to convert quote');
+    const errMsg = await parseErrorResponse(res, 'Failed to convert quote');
+    throw new Error(errMsg);
   }
   return res.json();
 }
 
+// ---------------- INVENTORY ----------------
 export async function fetchInventory(): Promise<{ products: Product[]; logs: any[]; summary: any }> {
-  const res = await fetch(`${API_BASE}/inventory`);
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/inventory`);
   if (!res.ok) throw new Error('Failed to fetch inventory');
   return res.json();
 }
 
 export async function adjustInventory(productId: string, change: number, reason: string, staffName: string): Promise<any> {
-  const res = await fetch(`${API_BASE}/inventory/adjust`, {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/inventory/adjust`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: getAdminHeaders(),
+    credentials: 'include',
     body: JSON.stringify({ productId, change, reason, staffName })
   });
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error || 'Failed to adjust inventory');
+    const errMsg = await parseErrorResponse(res, 'Failed to adjust inventory');
+    throw new Error(errMsg);
   }
   return res.json();
 }
 
+export async function adjustProductStock(productId: string, change: number, reason: string = 'Stock adjustment', staffName: string = 'Admin'): Promise<Product> {
+  return adjustInventory(productId, change, reason, staffName);
+}
+
+export async function updateProductStockQuantity(productId: string, stock: number, reason: string = 'Stock Maintaining update'): Promise<Product> {
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/products/${productId}/stock`, {
+    method: 'PUT',
+    headers: getAdminHeaders(),
+    credentials: 'include',
+    body: JSON.stringify({ stock, reason, staffName: 'Admin' })
+  });
+  if (!res.ok) {
+    const errMsg = await parseErrorResponse(res, 'Failed to update stock quantity');
+    throw new Error(errMsg);
+  }
+  const data = await res.json();
+  return data.product;
+}
+
+// ---------------- OFFERS, NOTIFICATIONS, REPORTS, STAFF ----------------
 export async function fetchOffers(): Promise<Offer[]> {
-  const res = await fetch(`${API_BASE}/offers`);
-  if (!res.ok) return [];
-  return res.json();
+  const apiBase = getApiBaseUrl();
+  try {
+    const res = await fetch(`${apiBase}/offers`);
+    if (!res.ok) return INITIAL_OFFERS;
+    return res.json();
+  } catch {
+    return INITIAL_OFFERS;
+  }
 }
 
 export async function fetchAdminNotifications(): Promise<AdminNotification[]> {
-  const res = await fetch(`${API_BASE}/notifications`);
-  if (!res.ok) return [];
-  return res.json();
+  const apiBase = getApiBaseUrl();
+  try {
+    const res = await fetch(`${apiBase}/notifications`, {
+      headers: getAdminHeaders(),
+      credentials: 'include'
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch {
+    return [];
+  }
 }
 
 export async function markNotificationAsRead(id: string): Promise<void> {
-  await fetch(`${API_BASE}/notifications/${id}/read`, { method: 'PUT' });
+  const apiBase = getApiBaseUrl();
+  await fetch(`${apiBase}/notifications/${id}/read`, {
+    method: 'PUT',
+    headers: getAdminHeaders(),
+    credentials: 'include'
+  }).catch(() => {});
 }
 
 export async function fetchReports(): Promise<any> {
-  const res = await fetch(`${API_BASE}/reports`);
+  const apiBase = getApiBaseUrl();
+  const res = await fetch(`${apiBase}/reports`, {
+    headers: getAdminHeaders(),
+    credentials: 'include'
+  });
   if (!res.ok) throw new Error('Failed to fetch reports');
   return res.json();
 }
 
 export async function fetchStaff(): Promise<StaffMember[]> {
-  const res = await fetch(`${API_BASE}/staff`);
-  if (!res.ok) return [];
-  return res.json();
-}
-
-export async function adjustProductStock(productId: string, change: number, reason: string = 'Stock adjustment', staffName: string = 'Admin'): Promise<Product> {
-  const res = await fetch(`${API_BASE}/inventory/adjust`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ productId, change, reason, staffName })
-  });
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error || 'Failed to adjust stock');
+  const apiBase = getApiBaseUrl();
+  try {
+    const res = await fetch(`${apiBase}/staff`);
+    if (!res.ok) return INITIAL_STAFF;
+    return res.json();
+  } catch {
+    return INITIAL_STAFF;
   }
-  const data = await res.json();
-  return data.product;
-}
-
-export async function updateProductStockQuantity(productId: string, stock: number, reason: string = 'Stock Maintaining update'): Promise<Product> {
-  const res = await fetch(`${API_BASE}/products/${productId}/stock`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ stock, reason, staffName: 'Admin' })
-  });
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error || 'Failed to update stock quantity');
-  }
-  const data = await res.json();
-  return data.product;
 }
 
 export async function createQuoteRequest(quotePayload: any): Promise<any> {
@@ -656,4 +839,3 @@ export async function updateQuoteStatus(id: string, status: string, notes?: stri
     grandTotal: quotedAmount || 0
   });
 }
-

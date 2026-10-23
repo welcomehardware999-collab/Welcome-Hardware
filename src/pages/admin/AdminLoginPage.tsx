@@ -1,7 +1,28 @@
-import React, { useState } from 'react';
-import { ArrowRight, AlertTriangle, Store, Loader2, Eye, EyeOff, ShieldCheck, UserCheck } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { 
+  ArrowRight, 
+  AlertTriangle, 
+  Store, 
+  Loader2, 
+  Eye, 
+  EyeOff, 
+  ShieldCheck, 
+  UserCheck,
+  Server,
+  CheckCircle2,
+  RefreshCw,
+  ExternalLink,
+  Settings
+} from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
 import { LOGO_URL } from '../../lib/assets';
+import { 
+  getApiBaseUrl, 
+  getCustomBackendUrl, 
+  setCustomBackendUrl, 
+  testBackendConnection, 
+  isBackendConfigured 
+} from '../../lib/api';
 
 interface AdminLoginPageProps {
   navigate: (path: string) => void;
@@ -14,6 +35,39 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ navigate }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+
+  // Backend endpoint configuration state for deployed environments (e.g. GitHub Pages)
+  const [showServerConfig, setShowServerConfig] = useState(false);
+  const [serverUrlInput, setServerUrlInput] = useState(getCustomBackendUrl() || '');
+  const [testingConnection, setTestingConnection] = useState(false);
+  const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
+  const [activeApiBase, setActiveApiBase] = useState(getApiBaseUrl());
+
+  const isGithubPages = typeof window !== 'undefined' && window.location.hostname.endsWith('github.io');
+  const backendConfigured = isBackendConfigured();
+
+  useEffect(() => {
+    // If on GitHub Pages without configured backend, open server config helper
+    if (isGithubPages && !backendConfigured) {
+      setShowServerConfig(true);
+    }
+  }, [isGithubPages, backendConfigured]);
+
+  const handleTestConnection = async () => {
+    setTestingConnection(true);
+    setTestResult(null);
+    const result = await testBackendConnection(serverUrlInput.trim() || undefined);
+    setTestResult(result);
+    setTestingConnection(false);
+  };
+
+  const handleSaveServerUrl = () => {
+    const trimmed = serverUrlInput.trim();
+    setCustomBackendUrl(trimmed);
+    const newBase = getApiBaseUrl();
+    setActiveApiBase(newBase);
+    handleTestConnection();
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,9 +94,14 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ navigate }) => {
         navigate('/admin');
       } else {
         setError(result.error || 'Invalid Admin ID or Password. Access denied.');
+        // If error mentions backend server, expand connection settings
+        if (result.error && (result.error.includes('backend') || result.error.includes('405') || result.error.includes('reach'))) {
+          setShowServerConfig(true);
+        }
       }
     } catch (err: any) {
       setError(err.message || 'Authentication error. Please check your credentials.');
+      setShowServerConfig(true);
     } finally {
       setSubmitting(false);
     }
@@ -72,7 +131,21 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ navigate }) => {
       </div>
 
       {/* Sign-In Card */}
-      <div className="mt-7 sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="mt-7 sm:mx-auto sm:w-full sm:max-w-md space-y-4">
+        
+        {/* Static Host Backend Notice */}
+        {isGithubPages && !backendConfigured && (
+          <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-200 space-y-1.5">
+            <div className="flex items-center gap-1.5 font-bold text-amber-400">
+              <Server className="w-4 h-4 shrink-0" />
+              <span>GitHub Pages Static Host Deployment</span>
+            </div>
+            <p className="text-[11px] text-amber-300/90 leading-relaxed">
+              GitHub Pages hosts client assets statically and cannot run database operations. To log in and manage live store orders, connect your hosted backend server URL below.
+            </p>
+          </div>
+        )}
+
         <div className="bg-slate-900 border border-slate-800/90 py-8 px-6 sm:px-9 shadow-2xl rounded-2xl space-y-6">
           
           <div className="flex items-center justify-between pb-3 border-b border-slate-800">
@@ -99,11 +172,31 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ navigate }) => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             
-            {/* Admin ID Input */}
+            {/* Admin ID Input & Quick-Select */}
             <div>
-              <label htmlFor="admin-id-input" className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
-                Admin ID
-              </label>
+              <div className="flex items-center justify-between mb-1.5">
+                <label htmlFor="admin-id-input" className="block text-xs font-bold text-slate-300 uppercase tracking-wider">
+                  Admin ID
+                </label>
+                <div className="flex items-center gap-1.5 text-[10px]">
+                  <span className="text-slate-500">Quick fill:</span>
+                  <button
+                    type="button"
+                    onClick={() => { setAdminId('Jayesh.WH.4516'); setError(null); }}
+                    className="text-amber-400 hover:text-amber-300 font-mono underline cursor-pointer"
+                  >
+                    Jayesh
+                  </button>
+                  <span className="text-slate-600">•</span>
+                  <button
+                    type="button"
+                    onClick={() => { setAdminId('Neelesh.WH.5297'); setError(null); }}
+                    className="text-amber-400 hover:text-amber-300 font-mono underline cursor-pointer"
+                  >
+                    Neelesh
+                  </button>
+                </div>
+              </div>
               <div className="relative">
                 <input
                   id="admin-id-input"
@@ -115,7 +208,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ navigate }) => {
                     setError(null);
                   }}
                   className="w-full text-base sm:text-sm font-medium bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3.5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
-                  placeholder="Enter authorized Admin ID"
+                  placeholder="e.g. Jayesh.WH.4516 or Neelesh.WH.5297"
                   autoComplete="username"
                   autoCapitalize="none"
                   spellCheck="false"
@@ -181,8 +274,87 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ navigate }) => {
             </div>
           </form>
 
+          {/* Backend Connection Drawer (for connecting GitHub Pages to API backend) */}
+          <div className="border-t border-slate-800/80 pt-3">
+            <button
+              type="button"
+              onClick={() => setShowServerConfig(!showServerConfig)}
+              className="w-full flex items-center justify-between text-[11px] text-slate-400 hover:text-slate-200 transition py-1"
+            >
+              <div className="flex items-center gap-1.5">
+                <Server className="w-3.5 h-3.5 text-slate-400" />
+                <span>Backend API Connection</span>
+                <span className={`w-2 h-2 rounded-full ${backendConfigured ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+              </div>
+              <span className="text-[10px] text-amber-400 font-mono underline">
+                {showServerConfig ? 'Hide Settings' : 'Configure Server'}
+              </span>
+            </button>
+
+            {showServerConfig && (
+              <div className="mt-3 p-3 bg-slate-950/80 border border-slate-800 rounded-xl space-y-3 text-xs">
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-[10px] uppercase font-bold text-slate-400">Target Backend API URL</span>
+                    <span className="text-[10px] font-mono text-slate-500">{activeApiBase}</span>
+                  </div>
+                  <input
+                    type="url"
+                    value={serverUrlInput}
+                    onChange={(e) => setServerUrlInput(e.target.value)}
+                    placeholder="https://your-api.onrender.com or /api"
+                    className="w-full text-xs font-mono bg-slate-900 border border-slate-800 rounded-lg py-2 px-2.5 text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  />
+                  <p className="text-[10px] text-slate-500 mt-1">
+                    Enter the URL of your deployed Express backend server. Leave blank to use default.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleTestConnection}
+                    disabled={testingConnection}
+                    className="flex-1 py-1.5 px-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-bold rounded-lg transition flex items-center justify-center gap-1.5 disabled:opacity-50"
+                  >
+                    {testingConnection ? (
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                    ) : (
+                      <RefreshCw className="w-3 h-3" />
+                    )}
+                    <span>Test Connection</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleSaveServerUrl}
+                    className="flex-1 py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 text-[11px] font-bold rounded-lg transition flex items-center justify-center gap-1.5"
+                  >
+                    <CheckCircle2 className="w-3 h-3" />
+                    <span>Save & Connect</span>
+                  </button>
+                </div>
+
+                {testResult && (
+                  <div className={`p-2 rounded-lg text-[11px] flex items-start gap-1.5 ${
+                    testResult.success
+                      ? 'bg-emerald-950/50 text-emerald-300 border border-emerald-800/60'
+                      : 'bg-rose-950/50 text-rose-300 border border-rose-800/60'
+                  }`}>
+                    {testResult.success ? (
+                      <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-emerald-400 mt-0.5" />
+                    ) : (
+                      <AlertTriangle className="w-3.5 h-3.5 shrink-0 text-rose-400 mt-0.5" />
+                    )}
+                    <span className="leading-snug">{testResult.message}</span>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
           {/* Return to Customer Storefront Link */}
-          <div className="border-t border-slate-800 pt-4 flex items-center justify-between text-xs text-slate-400">
+          <div className="border-t border-slate-800 pt-3 flex items-center justify-between text-xs text-slate-400">
             <button
               type="button"
               onClick={() => navigate('/')}

@@ -14,6 +14,25 @@ const PORT = 3000;
 
 app.use(express.json());
 
+// CORS and Preflight Handling for Cross-Origin Requests (e.g. GitHub Pages frontend -> API server)
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const origin = req.headers.origin;
+  if (origin) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  } else {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  }
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Admin-Role, X-Admin-User, X-Idempotency-Key');
+  res.setHeader('Access-Control-Expose-Headers', 'Content-Range, X-Content-Range, X-Idempotency-Key');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  next();
+});
+
 // List of connected SSE clients for real-time push notifications
 let sseClients: Response[] = [];
 
@@ -249,9 +268,12 @@ app.post('/api/auth/admin-login', (req: Request, res: Response) => {
   saveAdminSessionsToDisk();
 
   // Set secure cookie (7 days)
+  const origin = req.headers.origin;
+  const isHttps = req.secure || req.headers['x-forwarded-proto'] === 'https' || (origin && origin.startsWith('https://'));
+  const sameSiteConfig = isHttps ? 'SameSite=None; Secure' : 'SameSite=Lax';
   res.setHeader(
     'Set-Cookie',
-    `wh_admin_session=${encodeURIComponent(token)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${7 * 24 * 3600}`
+    `wh_admin_session=${encodeURIComponent(token)}; Path=/; HttpOnly; ${sameSiteConfig}; Max-Age=${7 * 24 * 3600}`
   );
 
   return res.json({
@@ -824,7 +846,11 @@ app.get('/api/orders/:id', (req: Request, res: Response) => {
 // Customer Creates Order with Instant Stock Reservation + QR/PIN
 app.post('/api/orders', async (req: Request, res: Response) => {
   try {
-    const order = await db.createOrder(req.body);
+    const idempotencyKey = req.body.idempotencyKey || (req.headers['x-idempotency-key'] as string);
+    const order = await db.createOrder({
+      ...req.body,
+      idempotencyKey
+    });
     broadcastSSE('new_order', order);
     broadcastSSE('admin_notification', db.notifications[0]);
     res.status(201).json(order);

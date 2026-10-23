@@ -36,6 +36,7 @@ jobs:
         run: bun run build
         env:
           VITE_BASE: /Welcome-Hardware/
+          VITE_API_URL: ${{ secrets.VITE_API_URL || vars.VITE_API_URL || '' }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

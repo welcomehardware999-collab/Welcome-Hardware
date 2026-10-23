@@ -157,6 +157,7 @@ export interface Order {
   pickupSlot?: string;
   notes?: string;
   isPinUsed: boolean;
+  idempotencyKey?: string;
   createdAt: string;
   confirmedAt?: string;
   readyAt?: string;

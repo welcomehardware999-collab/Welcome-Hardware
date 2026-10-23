@@ -11,7 +11,6 @@ import {
   Calculator, 
   FileText, 
   User, 
-  ShieldCheck, 
   Sparkles,
   Layers,
   Wrench,
@@ -69,7 +68,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, navigate }) => {
             </div>
           </div>
 
-          {/* Call Store & Admin Link */}
+          {/* Call Store & Direct Assistance */}
           <div className="flex items-center gap-3 ml-auto">
             {/* Call Store Phone Button */}
             <a
@@ -84,16 +83,6 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, navigate }) => {
 
             {/* PWA Install Button */}
             <PWAInstallButton compact />
-
-            {/* Admin Panel Direct Link */}
-            <button
-              onClick={() => navigate('/admin')}
-              id="header-admin-portal-link"
-              className="inline-flex items-center gap-1 text-slate-300 hover:text-amber-400 px-2 py-0.5 rounded border border-slate-700 text-[11px] transition"
-            >
-              <ShieldCheck className="w-3 h-3 text-amber-500" />
-              <span>Admin Portal</span>
-            </button>
           </div>
         </div>
       </div>
@@ -372,12 +361,6 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, navigate }) => {
               className="w-full text-left px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded"
             >
               Store Info & Directions
-            </button>
-            <button
-              onClick={() => { navigate('/admin'); setMobileMenuOpen(false); }}
-              className="w-full text-left px-3 py-2 text-xs font-bold text-amber-700 bg-amber-50/70 rounded border border-amber-200"
-            >
-              Go to Admin Panel
             </button>
           </div>
         </div>

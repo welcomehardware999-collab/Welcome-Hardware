@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "savedAt": "2026-10-20T13:26:19.819Z",
+  "savedAt": "2026-10-23T05:26:52.474Z",
   "products": [
     {
       "id": "ply-001",
@@ -13,8 +13,8 @@
       "discount": 8,
       "finalPrice": 3174,
       "stock": 85,
-      "reservedStock": 3,
-      "availableStock": 82,
+      "reservedStock": 5,
+      "availableStock": 80,
       "lowStockThreshold": 15,
       "unit": "Sheet",
       "size": "8 x 4 ft",
@@ -1804,6 +1804,62 @@
   ],
   "orders": [
     {
+      "id": "ord-1792733212335",
+      "orderNumber": "WH-1032",
+      "customer": {
+        "name": "Suresh Kumar",
+        "phone": "9988776655",
+        "email": "suresh@example.com",
+        "customerType": "Contractor",
+        "businessName": "Suresh Interiors"
+      },
+      "items": [
+        {
+          "productId": "ply-001",
+          "name": "CenturyPly Club Prime 18mm BWP Marine Plywood",
+          "sku": "WH-PLY-18BWP-01",
+          "brand": "CenturyPly",
+          "unit": "Sheet",
+          "price": 3450,
+          "discount": 8,
+          "finalPrice": 3174,
+          "quantity": 2,
+          "total": 6348,
+          "image": "https://images.unsplash.com/photo-1546484396-fb3fc6f95f98?auto=format&fit=crop&w=800&q=80",
+          "size": "8 x 4 ft",
+          "thickness": "18mm"
+        }
+      ],
+      "subtotal": 6348,
+      "discountTotal": 552,
+      "gstTotal": 1143,
+      "grandTotal": 6348,
+      "status": "Collected",
+      "pickupPin": "4242",
+      "qrCodeDataUrl": "data:image/png;base64,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",
+      "qrData": "{\"orderNumber\":\"WH-1032\",\"pin\":\"4242\",\"phone\":\"9988776655\",\"total\":6348,\"store\":\"Welcome Hardware, Near Theosophical Women's College, Hampi Road, HOSAPETE\"}",
+      "paymentStatus": "Pending",
+      "paymentMethod": "Pay at Store",
+      "pickupSlot": "Today (Ready in 2-4 Hours)",
+      "notes": "Verification test order",
+      "isPinUsed": true,
+      "idempotencyKey": "test-order-1792733212331",
+      "createdAt": "2026-10-23T05:26:52.403Z",
+      "timeline": [
+        {
+          "status": "Order Placed",
+          "timestamp": "2026-10-23T05:26:52.403Z",
+          "note": "Order created with store pickup reservation at Near Theosophical Women's College, Hampi Road, HOSAPETE."
+        },
+        {
+          "status": "Collected",
+          "timestamp": "2026-10-23T05:26:52.474Z",
+          "note": "Verified customer pickup PIN at Hampi Road counter and collected goods."
+        }
+      ],
+      "collectedAt": "2026-10-23T05:26:52.474Z"
+    },
+    {
       "id": "ord-1792502779719",
       "orderNumber": "WH-1031",
       "customer": {
@@ -2286,6 +2342,15 @@
   ],
   "notifications": [
     {
+      "id": "notif-1792733212403",
+      "title": "NEW ORDER RECEIVED #WH-1032",
+      "message": "Suresh Kumar ordered 1 items totaling ₹6,348. Pickup PIN: 4242",
+      "type": "order",
+      "orderId": "ord-1792733212335",
+      "timestamp": "2026-10-23T05:26:52.424Z",
+      "isRead": false
+    },
+    {
       "id": "notif-1792502779772",
       "title": "NEW ORDER RECEIVED #WH-1031",
       "message": "Sanjay Singhania ordered 1 items totaling ₹9,522. Pickup PIN: 7182",
@@ -2394,10 +2459,24 @@
       "reason": "Reserved 3 units for Order #WH-1031",
       "timestamp": "2026-10-20T13:26:19.719Z",
       "byUser": "Customer Online Order"
+    },
+    {
+      "id": "inv-1792733212335-qplq",
+      "productId": "ply-001",
+      "productName": "CenturyPly Club Prime 18mm BWP Marine Plywood",
+      "sku": "WH-PLY-18BWP-01",
+      "change": -2,
+      "previousStock": 85,
+      "newStock": 85,
+      "type": "order_reservation",
+      "orderId": "ord-1792733212335",
+      "reason": "Reserved 2 units for Order #WH-1032",
+      "timestamp": "2026-10-23T05:26:52.335Z",
+      "byUser": "Customer Online Order"
     }
   ],
   "reviews": [],
-  "orderCounter": 1031,
+  "orderCounter": 1032,
   "quoteCounter": 501,
   "priceHistory": [],
   "allowManagerPriceEdit": true

@@ -62,6 +62,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ navigate }) => {
 
   const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitting) return;
     setErrorMessage(null);
 
     // Validate phone
@@ -88,6 +89,8 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ navigate }) => {
         gstNumber
       });
 
+      const idempotencyKey = `ord-chk-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+
       const orderPayload = {
         customer: {
           name: name.trim(),
@@ -105,7 +108,8 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ navigate }) => {
         })),
         paymentMethod,
         pickupSlot,
-        notes: notes.trim() || undefined
+        notes: notes.trim() || undefined,
+        idempotencyKey
       };
 
       const placedOrder = await createOrder(orderPayload);

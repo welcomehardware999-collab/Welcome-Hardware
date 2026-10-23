@@ -8,7 +8,8 @@ import {
   adminLogout, 
   verifyPickup,
   setAdminSession,
-  clearAdminSession
+  clearAdminSession,
+  getApiBaseUrl
 } from '../lib/api';
 
 interface AdminUser {
@@ -222,9 +223,21 @@ export const AdminProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   useEffect(() => {
     if (!user) return;
 
-    const eventSource = new EventSource('/api/events');
+    const apiBase = getApiBaseUrl();
+    const sseUrl = `${apiBase}/events`;
+    let eventSource: EventSource | null = null;
+    try {
+      eventSource = new EventSource(sseUrl, { withCredentials: true });
+    } catch (e) {
+      console.warn('Could not initialize SSE connection:', e);
+    }
 
-    eventSource.addEventListener('admin_notification', (e) => {
+    if (eventSource) {
+      eventSource.onerror = () => {
+        // SSE will automatically retry or fall back to polling
+      };
+
+      eventSource.addEventListener('admin_notification', (e) => {
       try {
         const notif: AdminNotification = JSON.parse(e.data);
         
@@ -271,6 +284,7 @@ export const AdminProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         console.error('New order SSE parse error:', err);
       }
     });
+    }
 
     // Fallback polling every 8 seconds for notifications in case of network drops
     const pollInterval = setInterval(() => {
@@ -278,7 +292,9 @@ export const AdminProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     }, 8000);
 
     return () => {
-      eventSource.close();
+      if (eventSource) {
+        eventSource.close();
+      }
       clearInterval(pollInterval);
     };
   }, [user, soundAlertEnabled]);

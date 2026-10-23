@@ -409,7 +409,16 @@ class HardwareStoreDB {
     paymentMethod: any;
     pickupSlot?: string;
     notes?: string;
+    idempotencyKey?: string;
   }): Promise<Order> {
+    // Prevent duplicate orders if customer retries or double-submits
+    if (orderData.idempotencyKey) {
+      const existing = this.orders.find(o => o.idempotencyKey === orderData.idempotencyKey);
+      if (existing) {
+        return existing;
+      }
+    }
+
     this.orderCounter++;
     const orderNumber = `WH-${this.orderCounter}`;
     const orderId = `ord-${Date.now()}`;
@@ -514,6 +523,7 @@ class HardwareStoreDB {
       pickupSlot: orderData.pickupSlot || 'Ready for pickup in 2-4 hours',
       notes: orderData.notes,
       isPinUsed: false,
+      idempotencyKey: orderData.idempotencyKey,
       createdAt: new Date().toISOString(),
       timeline: [
         {
